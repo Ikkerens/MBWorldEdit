@@ -44,12 +44,13 @@ public class ExpandCommand extends AbstractCommand {
             switch( dir ) {
                 case UP:
                 case NORTH:
-                case WEST:
+                case EAST:
                     dir.addToLocation( highest, amount );
                     break;
-                case EAST:
-                case SOUTH:
+
                 case DOWN:
+                case SOUTH:
+                case WEST:
                     dir.addToLocation( lowest, amount );
                     break;
             }
