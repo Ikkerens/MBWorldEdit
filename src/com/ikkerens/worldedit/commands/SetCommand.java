@@ -54,5 +54,4 @@ public class SetCommand extends AbstractCommand {
         } else
             player.sendMessage( "You need a valid selection to do this." );
     }
-
 }
