@@ -4,7 +4,7 @@ import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
-import com.ikkerens.worldedit.model.SettingBlockType;
+import com.ikkerens.worldedit.model.SetBlockType;
 import com.mbserver.api.dynamic.BlockManager;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
@@ -29,9 +29,9 @@ public class SetCommand extends AbstractCommand {
             Location highest = sel.getMaximumPosition();
             World world = lowest.getWorld();
 
-            SettingBlockType type;
+            SetBlockType type;
             try {
-                type = new SettingBlockType( args[ 0 ] );
+                type = new SetBlockType( args[ 0 ] );
             } catch ( BlockNotFoundException e ) {
                 player.sendMessage( e.getMessage() );
                 return;

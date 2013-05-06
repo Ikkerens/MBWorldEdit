@@ -6,12 +6,12 @@ import java.util.TreeMap;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.Parser;
 
-public class SettingBlockType extends Parser {
+public class SetBlockType extends Parser {
     private Random                  random;
     private TreeMap< Float, Short > validBlocks;
     private float                   total;
 
-    public SettingBlockType( String rawBlocks ) throws BlockNotFoundException {
+    public SetBlockType( String rawBlocks ) throws BlockNotFoundException {
         this.random = new Random();
         this.validBlocks = new TreeMap< Float, Short >();
         String[] blocks = rawBlocks.split( "," );

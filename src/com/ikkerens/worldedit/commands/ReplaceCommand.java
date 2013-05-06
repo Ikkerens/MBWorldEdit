@@ -5,7 +5,7 @@ import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.MatchBlockType;
 import com.ikkerens.worldedit.model.Selection;
-import com.ikkerens.worldedit.model.SettingBlockType;
+import com.ikkerens.worldedit.model.SetBlockType;
 import com.mbserver.api.dynamic.BlockManager;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
@@ -30,10 +30,10 @@ public class ReplaceCommand extends AbstractCommand {
             Location highest = sel.getMaximumPosition();
             World world = lowest.getWorld();
 
-            SettingBlockType type;
+            SetBlockType type;
             MatchBlockType match;
             try {
-                type = new SettingBlockType( args[ 1 ] );
+                type = new SetBlockType( args[ 1 ] );
                 match = new MatchBlockType( args[ 0 ] );
             } catch ( BlockNotFoundException e ) {
                 player.sendMessage( e.getMessage() );
