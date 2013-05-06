@@ -13,7 +13,7 @@ import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.Manifest;
 import com.mbserver.api.PluginManager;
 
-@Manifest( name = "MBWorldEdit", config = Config.class )
+@Manifest( name = "MBWorldEdit", authors = "Ikkerens", config = Config.class )
 public class WorldEditPlugin extends MBServerPlugin {
     @Override
     public void onEnable() {
