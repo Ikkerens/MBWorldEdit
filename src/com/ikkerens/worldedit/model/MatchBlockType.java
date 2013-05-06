@@ -2,8 +2,8 @@ package com.ikkerens.worldedit.model;
 
 import java.util.HashSet;
 
+import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.Parser;
-import com.ikkerens.worldedit.wand.BlockNotFoundException;
 
 public class MatchBlockType extends Parser {
     private HashSet< Short > ids;

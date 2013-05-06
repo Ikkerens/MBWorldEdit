@@ -1,6 +1,6 @@
 package com.ikkerens.worldedit.handlers;
 
-import com.ikkerens.worldedit.wand.BlockNotFoundException;
+import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.mbserver.api.game.Material;
 
 public abstract class Parser {
