@@ -1,11 +1,11 @@
 package com.ikkerens.worldedit.commands;
 
 import com.ikkerens.worldedit.WorldEditPlugin;
+import com.ikkerens.worldedit.exceptions.BlockLimitException;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.SetBlockType;
-import com.mbserver.api.dynamic.BlockManager;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
@@ -38,19 +38,19 @@ public class SetCommand extends AbstractCommand {
             }
 
             long start = System.currentTimeMillis();
+            int affected = 0;
 
-            BlockManager bm = this.getPlugin().getServer().getBlockManager();
-            for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
-                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ ) {
-                        short tS = type.getNextBlock();
-                        if ( bm.getBlockType( tS ).isTransparent() )
-                            world.setBlock( x, y, z, tS );
-                        else
-                            world.setBlockWithoutUpdate( x, y, z, tS );
-                    }
+            try {
+                for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
+                    for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
+                        for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                            affected += this.setBlock( affected, world, x, y, z, type );
+            } catch ( BlockLimitException e ) {
+                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
+                return;
+            }
 
-            player.sendMessage( String.format( "Action completed in %s seconds.", ( System.currentTimeMillis() - start ) / 1000f ) );
+            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
         } else
             player.sendMessage( "You need a valid selection to do this." );
     }
