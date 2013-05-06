@@ -27,8 +27,8 @@ public class SetCommand extends AbstractCommand {
         if ( sel.isValid() ) {
             Location lowest = sel.getMinimumPosition();
             Location highest = sel.getMaximumPosition();
-
             World world = lowest.getWorld();
+
             SettingBlockType type;
             try {
                 type = new SettingBlockType( args[ 0 ] );
