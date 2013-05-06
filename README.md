@@ -1,4 +1,4 @@
-MBWorldEdit
+Minebuilder WorldEdit
 ===========
 
 WorldEdit plugin for Minebuilder
