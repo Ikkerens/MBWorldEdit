@@ -1,7 +1,7 @@
 package com.ikkerens.worldedit.handlers;
 
 import com.ikkerens.worldedit.WorldEditPlugin;
-import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.Session;
 import com.mbserver.api.game.Player;
 
 public class AbstractHandler {
@@ -15,13 +15,13 @@ public class AbstractHandler {
         return this.plugin;
     }
 
-    protected final Selection getSelection( Player player ) {
-        Selection sel = player.getMetaData( "worldedit.selection", null );
-        if ( sel == null ) {
-            sel = new Selection( player );
-            player.setMetaData( "worldedit.selection", sel );
+    protected final Session getSession( Player player ) {
+        Session session = player.getMetaData( "worldedit.session", null );
+        if ( session == null ) {
+            session = new Session( this.plugin, player );
+            player.setMetaData( "worldedit.session", session );
         }
 
-        return sel;
+        return session;
     }
 }

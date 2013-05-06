@@ -36,7 +36,7 @@ public class ShiftCommand extends AbstractCommand {
             return;
         }
 
-        Selection sel = this.getSelection( player );
+        Selection sel = this.getSession( player ).getSelection();
         if ( sel.isValid() ) {
             Location lowest = sel.getMinimumPosition();
             Location highest = sel.getMaximumPosition();

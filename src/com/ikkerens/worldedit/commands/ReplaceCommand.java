@@ -6,7 +6,9 @@ import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.MatchBlockType;
 import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.SetBlockType;
+import com.ikkerens.worldedit.model.WEAction;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
@@ -24,7 +26,8 @@ public class ReplaceCommand extends AbstractCommand {
             return;
         }
 
-        Selection sel = this.getSelection( player );
+        Session session = this.getSession( player );
+        Selection sel = session.getSelection();
         if ( sel.isValid() ) {
             Location lowest = sel.getMinimumPosition();
             Location highest = sel.getMaximumPosition();
@@ -41,20 +44,20 @@ public class ReplaceCommand extends AbstractCommand {
             }
 
             long start = System.currentTimeMillis();
-            int affected = 0;
+            WEAction wea = session.newAction( world );
 
             try {
                 for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
                     for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                         for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
                             if ( match.matches( world.getBlockID( x, y, z ) ) )
-                                affected += this.setBlock( affected, world, x, y, z, type );
+                                wea.setBlock( x, y, z, type );
             } catch ( BlockLimitException e ) {
-                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
+                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
             }
 
-            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
+            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         } else
             player.sendMessage( "You need a valid selection to do this." );
     }

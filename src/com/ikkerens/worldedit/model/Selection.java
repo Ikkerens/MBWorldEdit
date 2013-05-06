@@ -2,14 +2,13 @@ package com.ikkerens.worldedit.model;
 
 import com.mbserver.api.Constructors;
 import com.mbserver.api.game.Location;
-import com.mbserver.api.game.Player;
 
 public class Selection {
-    private Player player;
+    private Session session;
     private Location pos1, pos2;
 
-    public Selection( Player player ) {
-        this.player = player;
+    public Selection( Session session ) {
+        this.session = session;
         this.pos1 = null;
         this.pos2 = null;
     }
@@ -45,6 +44,19 @@ public class Selection {
         return this.pos1 != null && this.pos2 != null;
     }
 
+    public int getCount() {
+        int count;
+
+        if ( this.pos1 != null && this.pos2 != null ) {
+            Location pos1 = this.getMinimumPosition();
+            Location pos2 = this.getMaximumPosition();
+            count = ( pos2.getBlockX() - pos1.getBlockX() + 1 ) * ( pos2.getBlockY() - pos1.getBlockY() + 1 ) * ( pos2.getBlockZ() - pos1.getBlockZ() + 1 );
+        } else
+            count = 0;
+
+        return count;
+    }
+
     public Location getMinimumPosition() {
         return Constructors.newLocation( this.pos1.getWorld(), Math.min( this.pos1.getX(), this.pos2.getX() ), Math.min( this.pos1.getY(), this.pos2.getY() ), Math.min( this.pos1.getZ(), this.pos2.getZ() ) );
     }
@@ -66,14 +78,6 @@ public class Selection {
         else
             pos2text = "(Not set)";
 
-        String count;
-        if ( this.pos1 != null && this.pos2 != null ) {
-            Location pos1 = this.getMinimumPosition();
-            Location pos2 = this.getMaximumPosition();
-            count = "" + ( pos2.getBlockX() - pos1.getBlockX() + 1 ) * ( pos2.getBlockY() - pos1.getBlockY() + 1 ) * ( pos2.getBlockZ() - pos1.getBlockZ() + 1 );
-        } else
-            count = "N/A";
-
-        player.sendMessage( String.format( "Selection: %s to %s (Count: %s)", pos1text, pos2text, count ) );
+        this.session.getPlayer().sendMessage( String.format( "Selection: %s to %s (Count: %s)", pos1text, pos2text, this.getCount() ) );
     }
 }

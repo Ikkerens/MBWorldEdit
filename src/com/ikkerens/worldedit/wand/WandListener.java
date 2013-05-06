@@ -14,10 +14,10 @@ public class WandListener extends AbstractListener {
     @EventHandler
     public void wandPlace( BlockPlaceEvent e ) {
         if ( e.getBlock().getBlockID() == Wand.LEFT.getId() ) {
-            this.getSelection( e.getPlayer() ).setPosition1( e.getLocation() );
+            this.getSession( e.getPlayer() ).getSelection().setPosition1( e.getLocation() );
             e.setCancelled( true );
         } else if ( e.getBlock().getBlockID() == Wand.RIGHT.getId() ) {
-            this.getSelection( e.getPlayer() ).setPosition2( e.getLocation() );
+            this.getSession( e.getPlayer() ).getSelection().setPosition2( e.getLocation() );
             e.setCancelled( true );
         }
     }

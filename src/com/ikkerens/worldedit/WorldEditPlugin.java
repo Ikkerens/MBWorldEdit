@@ -1,10 +1,12 @@
 package com.ikkerens.worldedit;
 
 import com.ikkerens.worldedit.commands.ExpandCommand;
+import com.ikkerens.worldedit.commands.LimitCommand;
 import com.ikkerens.worldedit.commands.PositionCommand;
 import com.ikkerens.worldedit.commands.ReplaceCommand;
 import com.ikkerens.worldedit.commands.SetCommand;
 import com.ikkerens.worldedit.commands.ShiftCommand;
+import com.ikkerens.worldedit.commands.UndoCommand;
 import com.ikkerens.worldedit.commands.WallsCommand;
 import com.ikkerens.worldedit.commands.WandCommand;
 import com.ikkerens.worldedit.wand.Wand;
@@ -23,11 +25,13 @@ public class WorldEditPlugin extends MBServerPlugin {
         PluginManager pm = this.getPluginManager();
         // Plugin commands
         pm.registerCommand( "/wand", new WandCommand( this ) );
+        pm.registerCommand( "/limit", new LimitCommand( this ) );
 
         // Actions
         pm.registerCommand( "/set", new SetCommand( this ) );
         pm.registerCommand( "/replace", new String[] { "/repl" }, new ReplaceCommand( this ) );
         pm.registerCommand( "/walls", new WallsCommand( this ) );
+        pm.registerCommand( "/undo", new UndoCommand( this ) );
 
         // Selection
         pm.registerCommand( "/pos1", new String[] { "/pos2" }, new PositionCommand( this ) );

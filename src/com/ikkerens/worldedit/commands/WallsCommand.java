@@ -5,7 +5,9 @@ import com.ikkerens.worldedit.exceptions.BlockLimitException;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.SetBlockType;
+import com.ikkerens.worldedit.model.WEAction;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
@@ -23,7 +25,8 @@ public class WallsCommand extends AbstractCommand {
             return;
         }
 
-        Selection sel = this.getSelection( player );
+        Session session = this.getSession( player );
+        Selection sel = session.getSelection();
         if ( sel.isValid() ) {
             Location lowest = sel.getMinimumPosition();
             Location highest = sel.getMaximumPosition();
@@ -38,26 +41,26 @@ public class WallsCommand extends AbstractCommand {
             }
 
             long start = System.currentTimeMillis();
-            int affected = 0;
+            WEAction wea = session.newAction( world );
 
             try {
                 for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
                     for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ ) {
-                        affected += this.setBlock( affected, world, lowest.getBlockX(), y, z, type );
-                        affected += this.setBlock( affected, world, highest.getBlockX(), y, z, type );
+                        wea.setBlock( lowest.getBlockX(), y, z, type );
+                        wea.setBlock( highest.getBlockX(), y, z, type );
                     }
 
                     for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ ) {
-                        affected += this.setBlock( affected, world, x, y, lowest.getBlockZ(), type );
-                        affected += this.setBlock( affected, world, x, y, highest.getBlockZ(), type );
+                        wea.setBlock( x, y, lowest.getBlockZ(), type );
+                        wea.setBlock( x, y, highest.getBlockZ(), type );
                     }
                 }
             } catch ( BlockLimitException e ) {
-                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
+                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
             }
 
-            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
+            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         } else
             player.sendMessage( "You need a valid selection to do this." );
     }
