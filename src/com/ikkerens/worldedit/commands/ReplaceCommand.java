@@ -44,11 +44,11 @@ public class ReplaceCommand extends AbstractCommand {
             int affected = 0;
 
             try {
-            for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
-                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
-                        if ( match.matches( world.getBlockID( x, y, z ) ) )
-                            affected += this.setBlock( affected, world, x, y, z, type );
+                for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
+                    for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
+                        for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                            if ( match.matches( world.getBlockID( x, y, z ) ) )
+                                affected += this.setBlock( affected, world, x, y, z, type );
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", affected, ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
