@@ -12,9 +12,8 @@ public class MatchBlockType extends Parser {
         this.ids = new HashSet< Short >();
         String[] blocks = rawBlocks.split( "," );
 
-        for ( String block : blocks ) {
+        for ( String block : blocks )
             this.ids.add( this.getItemID( block ) );
-        }
     }
 
     public boolean matches( short id ) {
