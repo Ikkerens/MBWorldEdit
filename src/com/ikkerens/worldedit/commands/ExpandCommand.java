@@ -33,7 +33,7 @@ public class ExpandCommand extends AbstractCommand {
             Direction dir;
             try {
                 dir = Direction.valueOf( args[ 1 ].toUpperCase() );
-            } catch ( NumberFormatException e ) {
+            } catch ( IllegalArgumentException e ) {
                 player.sendMessage( "That direction is invalid." );
                 return;
             }
