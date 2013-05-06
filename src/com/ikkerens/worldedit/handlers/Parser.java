@@ -9,7 +9,9 @@ public abstract class Parser {
             return Short.parseShort( arg );
         } catch ( NumberFormatException e ) {
             try {
-                return Material.valueOf( arg.toUpperCase() ).getID();
+                Material m = Material.valueOf( arg.toUpperCase() );
+                if ( m.getBlockType() != null )
+                    return m.getID();
             } catch ( IllegalArgumentException ignored ) {
             }
         }
