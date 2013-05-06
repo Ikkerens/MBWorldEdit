@@ -57,22 +57,22 @@ public class Selection {
         String pos1text, pos2text;
 
         if ( this.pos1 != null )
-            pos1text = String.format( "Pos 1 %s,%s,%s", this.pos1.getBlockX(), this.pos1.getBlockY(), this.pos1.getBlockZ() );
+            pos1text = String.format( "(%s,%s,%s)", this.pos1.getBlockX(), this.pos1.getBlockY(), this.pos1.getBlockZ() );
         else
-            pos1text = "(-)";
+            pos1text = "(Not set)";
 
         if ( this.pos2 != null )
-            pos2text = String.format( "Pos 2 %s,%s,%s", this.pos2.getBlockX(), this.pos2.getBlockY(), this.pos2.getBlockZ() );
+            pos2text = String.format( "(%s,%s,%s)", this.pos2.getBlockX(), this.pos2.getBlockY(), this.pos2.getBlockZ() );
         else
-            pos2text = "(-)";
+            pos2text = "(Not set)";
 
-        int count;
+        String count;
         if ( this.pos1 != null && this.pos2 != null ) {
             Location pos1 = this.getMinimumPosition();
             Location pos2 = this.getMaximumPosition();
-            count = ( pos2.getBlockX() - pos1.getBlockX() + 1 ) * ( pos2.getBlockY() - pos1.getBlockY() + 1 ) * ( pos2.getBlockZ() - pos1.getBlockZ() + 1 );
+            count = "" + ( pos2.getBlockX() - pos1.getBlockX() + 1 ) * ( pos2.getBlockY() - pos1.getBlockY() + 1 ) * ( pos2.getBlockZ() - pos1.getBlockZ() + 1 );
         } else
-            count = 0;
+            count = "N/A";
 
         player.sendMessage( String.format( "Selection: %s to %s (Count: %s)", pos1text, pos2text, count ) );
     }
