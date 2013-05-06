@@ -5,6 +5,7 @@ import com.ikkerens.worldedit.commands.PositionCommand;
 import com.ikkerens.worldedit.commands.ReplaceCommand;
 import com.ikkerens.worldedit.commands.SetCommand;
 import com.ikkerens.worldedit.commands.ShiftCommand;
+import com.ikkerens.worldedit.commands.WallsCommand;
 import com.ikkerens.worldedit.commands.WandCommand;
 import com.ikkerens.worldedit.wand.Wand;
 import com.ikkerens.worldedit.wand.WandListener;
@@ -26,6 +27,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         // Actions
         pm.registerCommand( "/set", new SetCommand( this ) );
         pm.registerCommand( "/replace", new String[] { "/repl" }, new ReplaceCommand( this ) );
+        pm.registerCommand( "/walls", new WallsCommand( this ) );
 
         // Selection
         pm.registerCommand( "/pos1", new String[] { "/pos2" }, new PositionCommand( this ) );
