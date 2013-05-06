@@ -20,6 +20,7 @@ public class WEAction {
         this.mgr = mgr;
         this.world = world;
         this.limit = limit;
+        this.undoList = new ArrayList< SimpleEntry< Integer[], Short > >();
     }
 
     public void setBlock( int x, int y, int z, SetBlockType type ) throws BlockLimitException {
@@ -34,7 +35,7 @@ public class WEAction {
             else
                 this.world.setBlockWithoutUpdate( x, y, z, next );
 
-            if ( this.affected >= this.limit )
+            if ( this.limit != -1 && this.affected >= this.limit )
                 throw new BlockLimitException();
 
             this.affected++;

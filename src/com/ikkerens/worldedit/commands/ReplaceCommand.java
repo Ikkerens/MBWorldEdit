@@ -47,9 +47,9 @@ public class ReplaceCommand extends AbstractCommand {
             WEAction wea = session.newAction( world );
 
             try {
-                for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                    for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
-                        for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                    for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
+                        for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                             if ( match.matches( world.getBlockID( x, y, z ) ) )
                                 wea.setBlock( x, y, z, type );
             } catch ( BlockLimitException e ) {

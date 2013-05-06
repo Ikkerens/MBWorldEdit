@@ -65,7 +65,7 @@ public class Selection {
         return Constructors.newLocation( this.pos1.getWorld(), Math.max( this.pos1.getX(), this.pos2.getX() ), Math.max( this.pos1.getY(), this.pos2.getY() ), Math.max( this.pos1.getZ(), this.pos2.getZ() ) );
     }
 
-    private void inform() {
+    public void inform() {
         String pos1text, pos2text;
 
         if ( this.pos1 != null )

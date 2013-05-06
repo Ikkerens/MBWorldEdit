@@ -44,9 +44,9 @@ public class SetCommand extends AbstractCommand {
             WEAction wea = session.newAction( world );
 
             try {
-                for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                    for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
-                        for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                    for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
+                        for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                             wea.setBlock( x, y, z, type );
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );

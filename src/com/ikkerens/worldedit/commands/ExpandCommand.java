@@ -20,24 +20,24 @@ public class ExpandCommand extends AbstractCommand {
             return;
         }
 
-        int amount;
-        try {
-            amount = Integer.parseInt( args[ 0 ] );
-        } catch ( NumberFormatException e ) {
-            player.sendMessage( "That amount is invalid." );
-            return;
-        }
-
-        Direction dir;
-        try {
-            dir = Direction.valueOf( args[ 1 ].toUpperCase() );
-        } catch ( NumberFormatException e ) {
-            player.sendMessage( "That direction is invalid." );
-            return;
-        }
-
         Selection sel = this.getSession( player ).getSelection();
         if ( sel.isValid() ) {
+            int amount;
+            try {
+                amount = Integer.parseInt( args[ 0 ] );
+            } catch ( NumberFormatException e ) {
+                player.sendMessage( "That amount is invalid." );
+                return;
+            }
+
+            Direction dir;
+            try {
+                dir = Direction.valueOf( args[ 1 ].toUpperCase() );
+            } catch ( NumberFormatException e ) {
+                player.sendMessage( "That direction is invalid." );
+                return;
+            }
+
             Location lowest = sel.getMinimumPosition();
             Location highest = sel.getMaximumPosition();
 
@@ -56,6 +56,7 @@ public class ExpandCommand extends AbstractCommand {
             }
 
             sel.setPositions( lowest, highest );
+            sel.inform();
         } else
             player.sendMessage( "You need a valid selection to do this." );
     }
