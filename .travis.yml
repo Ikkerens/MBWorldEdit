@@ -4,5 +4,6 @@ before_script:
   - 'unzip -jv MBServerApi-beta.zip MBServerAPI.jar'
   - 'find src/ 2>&1 | grep .java > sources.txt'
   - 'mkdir -v classes'
+  - 'ls -lah'
 script:
   - 'javac -cp ./MBServerAPI.jar:. -d classes -sourcepath src @sources.txt'
