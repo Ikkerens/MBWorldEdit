@@ -10,7 +10,7 @@ public abstract class AbstractCommand extends AbstractHandler implements Command
         super( plugin );
     }
 
-    public void execute( String command, final CommandSender sender, final String[] args, final String label ) {
+    public void execute( String command, CommandSender sender, String[] args, String label ) {
         if ( !( sender instanceof Player ) ) {
             sender.sendMessage( "WorldEdit can only be used by players." );
             return;
@@ -21,12 +21,7 @@ public abstract class AbstractCommand extends AbstractHandler implements Command
             // return;
         }
 
-        Thread cmdThread = new Thread( new Runnable() {
-            public void run() {
-                AbstractCommand.this.execute( label, (Player) sender, args );
-            }
-        } );
-        cmdThread.start();
+        this.execute( label, (Player) sender, args );
     }
 
     protected abstract void execute( String label, Player player, String[] args );

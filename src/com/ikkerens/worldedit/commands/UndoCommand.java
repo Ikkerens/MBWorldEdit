@@ -1,10 +1,10 @@
 package com.ikkerens.worldedit.commands;
 
 import com.ikkerens.worldedit.WorldEditPlugin;
-import com.ikkerens.worldedit.handlers.AbstractCommand;
+import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.mbserver.api.game.Player;
 
-public class UndoCommand extends AbstractCommand {
+public class UndoCommand extends ActionCommand {
 
     public UndoCommand( WorldEditPlugin plugin ) {
         super( plugin );
