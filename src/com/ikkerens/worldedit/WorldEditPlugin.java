@@ -3,9 +3,11 @@ package com.ikkerens.worldedit;
 import com.ikkerens.worldedit.commands.CopyCommand;
 import com.ikkerens.worldedit.commands.ExpandCommand;
 import com.ikkerens.worldedit.commands.LimitCommand;
+import com.ikkerens.worldedit.commands.LoadCommand;
 import com.ikkerens.worldedit.commands.PasteCommand;
 import com.ikkerens.worldedit.commands.PositionCommand;
 import com.ikkerens.worldedit.commands.ReplaceCommand;
+import com.ikkerens.worldedit.commands.SaveCommand;
 import com.ikkerens.worldedit.commands.SetCommand;
 import com.ikkerens.worldedit.commands.ShiftCommand;
 import com.ikkerens.worldedit.commands.UndoCommand;
@@ -42,7 +44,9 @@ public class WorldEditPlugin extends MBServerPlugin {
 
         // Clipboard
         pm.registerCommand( "/copy", new String[] { "/cp" }, new CopyCommand( this ) );
-        pm.registerCommand( "paste", new PasteCommand( this ) );
+        pm.registerCommand( "/paste", new PasteCommand( this ) );
+        pm.registerCommand( "/load", new LoadCommand( this ) );
+        pm.registerCommand( "/save", new SaveCommand( this ) );
 
         pm.registerEventHandler( new WandListener( this ) );
     }
