@@ -12,6 +12,7 @@ public class Session {
     private BlockManager           mgr;
     private Player                 player;
     private Selection              selection;
+    private Clipboard              clipboard;
     private LinkedList< WEAction > history;
 
     private int                    undoTreshold;
@@ -40,6 +41,14 @@ public class Session {
 
     public Selection getSelection() {
         return this.selection;
+    }
+
+    public Clipboard getClipboard() {
+        return this.clipboard;
+    }
+
+    public void setClipboard( Clipboard clipboard ) {
+        this.clipboard = clipboard;
     }
 
     public WEAction newAction( World world, int count ) {

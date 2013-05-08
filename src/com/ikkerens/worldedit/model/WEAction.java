@@ -27,24 +27,27 @@ public class WEAction {
             this.undoList = new ArrayList< SimpleEntry< Integer[], Short > >();
     }
 
-    public void setBlock( int x, int y, int z, SetBlockType type ) throws BlockLimitException {
+    public void setBlock( int x, int y, int z, short blockID ) throws BlockLimitException {
         short current = this.world.getBlockID( x, y, z );
-        short next = type.getNextBlock();
 
-        if ( current != next ) {
+        if ( current != blockID ) {
             if ( this.recordAction )
                 this.undoList.add( new SimpleEntry< Integer[], Short >( new Integer[] { x, y, z }, current ) );
 
-            if ( this.mgr.getBlockType( next ).isTransparent() )
-                this.world.setBlock( x, y, z, next );
+            if ( this.mgr.getBlockType( blockID ).isTransparent() )
+                this.world.setBlock( x, y, z, blockID );
             else
-                this.world.setBlockWithoutUpdate( x, y, z, next );
+                this.world.setBlockWithoutUpdate( x, y, z, blockID );
 
             if ( this.limit != -1 && this.affected >= this.limit )
                 throw new BlockLimitException();
 
             this.affected++;
         }
+    }
+
+    public void setBlock( int x, int y, int z, SetBlockType type ) throws BlockLimitException {
+        this.setBlock( x, y, z, type.getNextBlock() );
     }
 
     public void undo() {

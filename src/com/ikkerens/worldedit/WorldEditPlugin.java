@@ -1,7 +1,9 @@
 package com.ikkerens.worldedit;
 
+import com.ikkerens.worldedit.commands.CopyCommand;
 import com.ikkerens.worldedit.commands.ExpandCommand;
 import com.ikkerens.worldedit.commands.LimitCommand;
+import com.ikkerens.worldedit.commands.PasteCommand;
 import com.ikkerens.worldedit.commands.PositionCommand;
 import com.ikkerens.worldedit.commands.ReplaceCommand;
 import com.ikkerens.worldedit.commands.SetCommand;
@@ -37,6 +39,10 @@ public class WorldEditPlugin extends MBServerPlugin {
         pm.registerCommand( "/pos1", new String[] { "/pos2" }, new PositionCommand( this ) );
         pm.registerCommand( "/shift", new ShiftCommand( this ) );
         pm.registerCommand( "/expand", new ExpandCommand( this ) );
+
+        // Clipboard
+        pm.registerCommand( "/copy", new String[] { "/cp" }, new CopyCommand( this ) );
+        pm.registerCommand( "paste", new PasteCommand( this ) );
 
         pm.registerEventHandler( new WandListener( this ) );
     }
