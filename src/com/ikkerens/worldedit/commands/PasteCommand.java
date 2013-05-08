@@ -38,11 +38,11 @@ public class PasteCommand extends ActionCommand {
                         for ( int z = 0; z < blocks[ x ][ y ].length; z++ )
                             wea.setBlock( x + oX, y + oY, z + oZ, blocks[ x ][ y ][ z ] );
             } catch ( BlockLimitException e ) {
-                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
             }
 
-            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         } else
             player.sendMessage( "Your clipboard is empty." );
     }

@@ -58,7 +58,7 @@ public class ExpandCommand extends AbstractCommand {
             sel.setPositions( lowest, highest );
             sel.inform();
         } else
-            player.sendMessage( "You need a valid selection to do this." );
+            player.sendMessage( NEED_SELECTION );
     }
 
 }

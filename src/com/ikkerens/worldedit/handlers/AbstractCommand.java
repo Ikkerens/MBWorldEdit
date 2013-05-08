@@ -6,6 +6,10 @@ import com.mbserver.api.CommandSender;
 import com.mbserver.api.game.Player;
 
 public abstract class AbstractCommand extends AbstractHandler implements CommandExecutor {
+    protected final static String NEED_SELECTION = "You need a valid selection to do this.";
+    protected final static String FINISHED_DONE  = "Action of %s blocks completed in %s seconds.";
+    protected final static String FINISHED_LIMIT = "Hit limit of %s blocks after %s seconds.";
+
     public AbstractCommand( WorldEditPlugin plugin ) {
         super( plugin );
     }

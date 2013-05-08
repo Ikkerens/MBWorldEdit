@@ -49,12 +49,12 @@ public class SetCommand extends ActionCommand {
                         for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                             wea.setBlock( x, y, z, type );
             } catch ( BlockLimitException e ) {
-                player.sendMessage( String.format( "Hit limit of %s blocks after %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
             }
 
-            player.sendMessage( String.format( "Action of %s blocks completed in %s seconds.", wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         } else
-            player.sendMessage( "You need a valid selection to do this." );
+            player.sendMessage( NEED_SELECTION );
     }
 }

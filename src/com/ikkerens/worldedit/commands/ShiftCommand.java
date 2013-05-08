@@ -44,7 +44,7 @@ public class ShiftCommand extends AbstractCommand {
             sel.setPositions( dir.addToLocation( lowest, amount ), dir.addToLocation( highest, amount ) );
             sel.inform();
         } else
-            player.sendMessage( "You need a valid selection to do this." );
+            player.sendMessage( NEED_SELECTION );
     }
 
 }

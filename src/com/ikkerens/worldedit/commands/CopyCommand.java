@@ -41,7 +41,7 @@ public class CopyCommand extends ActionCommand {
 
             player.sendMessage( "Blocks copied" );
         } else
-            player.sendMessage( "You need a valid selection to do this." );
+            player.sendMessage( NEED_SELECTION );
 
     }
 }
