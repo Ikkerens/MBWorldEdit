@@ -14,6 +14,7 @@ public class Session {
     private Selection              selection;
     private LinkedList< WEAction > history;
 
+    private int                    undoTreshold;
     private int                    undoLimit;
     private int                    limit;
 
@@ -25,6 +26,7 @@ public class Session {
 
         Config config = plugin.getConfig();
         this.undoLimit = config.getUndoHistoryCount();
+        this.undoTreshold = config.getUndoTreshold();
         this.limit = config.getLimit();
     }
 
@@ -40,12 +42,15 @@ public class Session {
         return this.selection;
     }
 
-    public WEAction newAction( World world ) {
-        WEAction act = new WEAction( this.mgr, world, this.limit );
+    public WEAction newAction( World world, int count ) {
+        boolean recordHistory = count > this.undoTreshold;
+        WEAction act = new WEAction( this.mgr, world, recordHistory, this.limit );
 
-        this.history.push( act );
-        if ( this.history.size() > undoLimit )
-            this.history.removeLast();
+        if ( recordHistory ) {
+            this.history.push( act );
+            if ( this.history.size() > undoLimit )
+                this.history.removeLast();
+        }
 
         return act;
     }

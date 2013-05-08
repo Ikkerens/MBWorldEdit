@@ -11,16 +11,20 @@ public class WEAction {
     private final BlockManager                           mgr;
 
     private World                                        world;
+    private boolean                                      recordAction;
     private int                                          limit;
     private int                                          affected;
 
     private ArrayList< SimpleEntry< Integer[], Short > > undoList;
 
-    WEAction( BlockManager mgr, World world, int limit ) {
+    WEAction( BlockManager mgr, World world, boolean recordAction, int limit ) {
         this.mgr = mgr;
         this.world = world;
+        this.recordAction = recordAction;
         this.limit = limit;
-        this.undoList = new ArrayList< SimpleEntry< Integer[], Short > >();
+
+        if ( this.recordAction )
+            this.undoList = new ArrayList< SimpleEntry< Integer[], Short > >();
     }
 
     public void setBlock( int x, int y, int z, SetBlockType type ) throws BlockLimitException {
@@ -28,7 +32,8 @@ public class WEAction {
         short next = type.getNextBlock();
 
         if ( current != next ) {
-            this.undoList.add( new SimpleEntry< Integer[], Short >( new Integer[] { x, y, z }, current ) );
+            if ( this.recordAction )
+                this.undoList.add( new SimpleEntry< Integer[], Short >( new Integer[] { x, y, z }, current ) );
 
             if ( this.mgr.getBlockType( next ).isTransparent() )
                 this.world.setBlock( x, y, z, next );

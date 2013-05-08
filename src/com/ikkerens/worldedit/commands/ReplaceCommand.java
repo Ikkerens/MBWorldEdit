@@ -44,7 +44,7 @@ public class ReplaceCommand extends ActionCommand {
             }
 
             long start = System.currentTimeMillis();
-            WEAction wea = session.newAction( world );
+            WEAction wea = session.newAction( world, sel.getCount() );
 
             try {
                 for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )

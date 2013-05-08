@@ -41,7 +41,7 @@ public class WallsCommand extends ActionCommand {
             }
 
             long start = System.currentTimeMillis();
-            WEAction wea = session.newAction( world );
+            WEAction wea = session.newAction( world, sel.getCount() );
 
             try {
                 for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
