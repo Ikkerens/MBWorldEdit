@@ -52,6 +52,7 @@ public class ReplaceCommand extends ActionCommand {
                         for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                             if ( match.matches( world.getBlockID( x, y, z ) ) )
                                 wea.setBlock( x, y, z, type );
+                wea.finish();
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;

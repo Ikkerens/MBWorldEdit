@@ -40,6 +40,7 @@ public class PasteCommand extends ActionCommand {
                     for ( int y = 0; y < blocks[ x ].length; y++ )
                         for ( int z = 0; z < blocks[ x ][ y ].length; z++ )
                             wea.setBlock( x + oX, y + oY, z + oZ, blocks[ x ][ y ][ z ] );
+                wea.finish();
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;

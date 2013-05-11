@@ -55,6 +55,7 @@ public class WallsCommand extends ActionCommand {
                         wea.setBlock( x, y, highest.getBlockZ(), type );
                     }
                 }
+                wea.finish();
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;

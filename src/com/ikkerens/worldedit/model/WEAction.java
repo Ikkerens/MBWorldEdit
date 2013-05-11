@@ -2,23 +2,22 @@ package com.ikkerens.worldedit.model;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import com.ikkerens.worldedit.exceptions.BlockLimitException;
-import com.mbserver.api.dynamic.BlockManager;
+import com.mbserver.api.game.Chunk;
 import com.mbserver.api.game.World;
 
 public class WEAction {
-    private final BlockManager                           mgr;
-
     private World                                        world;
     private boolean                                      recordAction;
     private int                                          limit;
     private int                                          affected;
 
+    private HashSet< Chunk >                             chunks;
     private ArrayList< SimpleEntry< Integer[], Short > > undoList;
 
-    WEAction( BlockManager mgr, World world, boolean recordAction, int limit ) {
-        this.mgr = mgr;
+    WEAction( World world, boolean recordAction, int limit ) {
         this.world = world;
         this.recordAction = recordAction;
         this.limit = limit;
@@ -37,10 +36,9 @@ public class WEAction {
             if ( this.recordAction )
                 this.undoList.add( new SimpleEntry< Integer[], Short >( new Integer[] { x, y, z }, current ) );
 
-            if ( this.mgr.getBlockType( blockID ).isOpaque() )
-                this.world.setBlock( x, y, z, blockID );
-            else
-                this.world.setBlockWithoutUpdate( x, y, z, blockID );
+            this.world.setBlockWithoutUpdate( x, y, z, blockID );
+
+            this.chunks.add( this.world.getChunk( x, y, z, false ) );
 
             this.affected++;
         }
@@ -55,6 +53,12 @@ public class WEAction {
             Integer[] keys = entry.getKey();
             this.world.setBlockWithoutUpdate( keys[ 0 ], keys[ 1 ], keys[ 2 ], entry.getValue() );
         }
+    }
+
+    public void finish() {
+        for ( Chunk ch : this.chunks )
+            ch.calculateLight();
+        this.chunks.clear();
     }
 
     public int getAffected() {

@@ -48,6 +48,7 @@ public class SetCommand extends ActionCommand {
                     for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
                         for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                             wea.setBlock( x, y, z, type );
+                wea.finish();
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;

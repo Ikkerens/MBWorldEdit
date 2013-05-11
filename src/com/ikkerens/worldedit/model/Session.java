@@ -4,12 +4,10 @@ import java.util.LinkedList;
 
 import com.ikkerens.worldedit.Config;
 import com.ikkerens.worldedit.WorldEditPlugin;
-import com.mbserver.api.dynamic.BlockManager;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
 public class Session {
-    private BlockManager           mgr;
     private Player                 player;
     private Selection              selection;
     private Clipboard              clipboard;
@@ -20,7 +18,6 @@ public class Session {
     private int                    limit;
 
     public Session( WorldEditPlugin plugin, Player player ) {
-        this.mgr = plugin.getBlockManager();
         this.player = player;
         this.selection = new Selection( this );
         this.history = new LinkedList< WEAction >();
@@ -53,7 +50,7 @@ public class Session {
 
     public WEAction newAction( World world, int count ) {
         boolean recordHistory = count <= this.undoTreshold;
-        WEAction act = new WEAction( this.mgr, world, recordHistory, this.limit );
+        WEAction act = new WEAction( world, recordHistory, this.limit );
 
         if ( recordHistory ) {
             this.history.push( act );
