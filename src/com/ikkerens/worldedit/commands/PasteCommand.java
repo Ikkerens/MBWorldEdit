@@ -30,7 +30,10 @@ public class PasteCommand extends ActionCommand {
 
             long start = System.currentTimeMillis();
 
-            WEAction wea = session.newAction( world, blocks.length * blocks[ 0 ].length * blocks[ 0 ][ 0 ].length );
+            WEAction wea = session.newAction( world, 
+                                                     blocks.length *
+                                                     blocks[ 0 ].length * 
+                                                     blocks[ 0 ][ 0 ].length );
 
             try {
                 for ( int x = 0; x < blocks.length; x++ )

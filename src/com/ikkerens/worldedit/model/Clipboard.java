@@ -35,12 +35,16 @@ public class Clipboard {
             int oSize = file.readInt();
             int cSize = file.readInt();
             byte[] compressed = new byte[ cSize ];
-            file.read( compressed );
             byte[] decompressed = new byte[ oSize ];
+
+            int loaded = 0;
+            while ( loaded != cSize )
+                loaded += file.read( compressed, loaded, cSize - loaded );
 
             Inflater decompressor = new Inflater();
             decompressor.setInput( compressed );
             decompressor.inflate( decompressed );
+            decompressor.end();
 
             ByteBuffer schem = ByteBuffer.wrap( decompressed );
 
@@ -59,10 +63,11 @@ public class Clipboard {
         } catch ( IOException e ) {
         } catch ( DataFormatException e ) {
         } finally {
-            try {
-                file.close();
-            } catch ( IOException e ) {
-            }
+            if ( file != null )
+                try {
+                    file.close();
+                } catch ( IOException e ) {
+                }
         }
 
         return null;
@@ -111,8 +116,9 @@ public class Clipboard {
             byte[] before = byteBuf.array();
             byte[] result = new byte[ before.length ];
 
-            Deflater compressor = new Deflater( Deflater.DEFAULT_COMPRESSION );
+            Deflater compressor = new Deflater( Deflater.BEST_COMPRESSION );
             compressor.setInput( before );
+            compressor.finish();
             int cSize = compressor.deflate( result );
             compressor.end();
 
@@ -124,10 +130,11 @@ public class Clipboard {
             return true;
         } catch ( IOException e ) {
         } finally {
-            try {
-                file.close();
-            } catch ( IOException e ) {
-            }
+            if ( file != null )
+                try {
+                    file.close();
+                } catch ( IOException e ) {
+                }
         }
 
         return false;
