@@ -31,16 +31,16 @@ public class WEAction {
         short current = this.world.getBlockID( x, y, z );
 
         if ( current != blockID ) {
+            if ( this.limit != -1 && this.affected >= this.limit )
+                throw new BlockLimitException();
+
             if ( this.recordAction )
                 this.undoList.add( new SimpleEntry< Integer[], Short >( new Integer[] { x, y, z }, current ) );
 
-            if ( this.mgr.getBlockType( blockID ).isTransparent() )
+            if ( this.mgr.getBlockType( blockID ).isOpaque() )
                 this.world.setBlock( x, y, z, blockID );
             else
                 this.world.setBlockWithoutUpdate( x, y, z, blockID );
-
-            if ( this.limit != -1 && this.affected >= this.limit )
-                throw new BlockLimitException();
 
             this.affected++;
         }

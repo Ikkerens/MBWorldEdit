@@ -52,7 +52,7 @@ public class Session {
     }
 
     public WEAction newAction( World world, int count ) {
-        boolean recordHistory = count > this.undoTreshold;
+        boolean recordHistory = count <= this.undoTreshold;
         WEAction act = new WEAction( this.mgr, world, recordHistory, this.limit );
 
         if ( recordHistory ) {
