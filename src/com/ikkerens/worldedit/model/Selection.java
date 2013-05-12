@@ -66,18 +66,13 @@ public class Selection {
     }
 
     public void inform() {
-        String pos1text, pos2text;
-
-        if ( this.pos1 != null )
-            pos1text = String.format( "(%s,%s,%s)", this.pos1.getBlockX(), this.pos1.getBlockY(), this.pos1.getBlockZ() );
-        else
-            pos1text = "(Not set)";
-
-        if ( this.pos2 != null )
-            pos2text = String.format( "(%s,%s,%s)", this.pos2.getBlockX(), this.pos2.getBlockY(), this.pos2.getBlockZ() );
-        else
-            pos2text = "(Not set)";
+        String pos1text = this.posText( this.pos1 );
+        String pos2text = this.posText( this.pos2 );
 
         this.session.getPlayer().sendMessage( String.format( "Selection: %s to %s (Count: %s)", pos1text, pos2text, this.getCount() ) );
+    }
+
+    private String posText( Location pos ) {
+        return pos != null ? String.format( "(%s,%s,%s)", pos.getBlockX(), pos.getBlockY(), pos.getBlockZ() ) : "(Not set)";
     }
 }

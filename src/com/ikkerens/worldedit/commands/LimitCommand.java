@@ -24,7 +24,7 @@ public class LimitCommand extends AbstractCommand {
             player.sendMessage( String.format( "Limit set to %s", limit ) );
 
             Config config = this.getPlugin().getConfig();
-            if ( limit > config.getUndoTreshold() )
+            if ( limit == -1 || limit > config.getUndoTreshold() )
                 player.sendMessage( String.format( "You can NOT undo actions bigger than %s blocks!", config.getUndoTreshold() ) );
         } catch ( NumberFormatException e ) {
             player.sendMessage( args[ 0 ] + " is not a valid number." );

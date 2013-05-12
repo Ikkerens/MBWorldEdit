@@ -28,18 +28,17 @@ public class PasteCommand extends ActionCommand {
             int oZ = pLoc.getBlockZ() + clipboard.getRelativeZ();
             short[][][] blocks = clipboard.getBlocks();
 
-            long start = System.currentTimeMillis();
+            WEAction wea = session.newAction( world, blocks.length * blocks[ 0 ].length * blocks[ 0 ][ 0 ].length );
+            boolean skipAir = args.length == 1 && args[ 0 ].equalsIgnoreCase( "-a" );
 
-            WEAction wea = session.newAction( world, 
-                                                     blocks.length *
-                                                     blocks[ 0 ].length * 
-                                                     blocks[ 0 ][ 0 ].length );
+            long start = System.currentTimeMillis();
 
             try {
                 for ( int x = 0; x < blocks.length; x++ )
                     for ( int y = 0; y < blocks[ x ].length; y++ )
                         for ( int z = 0; z < blocks[ x ][ y ].length; z++ )
-                            wea.setBlock( x + oX, y + oY, z + oZ, blocks[ x ][ y ][ z ] );
+                            if ( !skipAir || blocks[ x ][ y ][ z ] != 0 )
+                                wea.setBlock( x + oX, y + oY, z + oZ, blocks[ x ][ y ][ z ] );
                 wea.finish();
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );

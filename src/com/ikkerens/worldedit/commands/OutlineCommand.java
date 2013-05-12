@@ -12,9 +12,9 @@ import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class WallsCommand extends ActionCommand {
+public class OutlineCommand extends ActionCommand {
 
-    public WallsCommand( WorldEditPlugin plugin ) {
+    public OutlineCommand( WorldEditPlugin plugin ) {
         super( plugin );
     }
 
@@ -55,6 +55,14 @@ public class WallsCommand extends ActionCommand {
                         wea.setBlock( x, y, highest.getBlockZ(), type );
                     }
                 }
+
+                if ( label.equalsIgnoreCase( "/outline" ) )
+                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                        for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ ) {
+                            wea.setBlock( x, lowest.getBlockY(), z, type );
+                            wea.setBlock( x, highest.getBlockY(), z, type );
+                        }
+
                 wea.finish();
             } catch ( BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );

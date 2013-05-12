@@ -20,9 +20,9 @@ public abstract class AbstractCommand extends AbstractHandler implements Command
             return;
         }
 
-        if ( !sender.hasPermission( String.format( "ikkerens.worldedit.%s", command.replaceFirst( "/", "" ) ) ) ) {
-            // sender.sendMessage( "You do not have permission to use /" + label );
-            // return;
+        if ( !sender.hasPermission( String.format( "ikkerens.worldedit.%s", command.replaceFirst( "/", "" ) ) ) && !sender.hasPermission( "ikkerens.worldedit.*" ) ) {
+            sender.sendMessage( "You do not have permission to use /" + label );
+            return;
         }
 
         this.execute( label, (Player) sender, args );

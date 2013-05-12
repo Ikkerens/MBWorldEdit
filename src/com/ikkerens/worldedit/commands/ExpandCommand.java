@@ -22,37 +22,46 @@ public class ExpandCommand extends AbstractCommand {
 
         Selection sel = this.getSession( player ).getSelection();
         if ( sel.isValid() ) {
-            int amount;
-            try {
-                amount = Integer.parseInt( args[ 0 ] );
-            } catch ( NumberFormatException e ) {
-                player.sendMessage( "That amount is invalid." );
-                return;
-            }
+            Location lowest, highest;
+            if ( args[ 0 ].equalsIgnoreCase( "vert" ) ) {
+                lowest = sel.getMinimumPosition();
+                highest = sel.getMaximumPosition();
 
-            Direction dir;
-            try {
-                dir = Direction.valueOf( args[ 1 ].toUpperCase() );
-            } catch ( IllegalArgumentException e ) {
-                player.sendMessage( "That direction is invalid." );
-                return;
-            }
+                lowest.set( lowest.getX(), 0, lowest.getZ(), false );
+                highest.set( highest.getX(), 127, highest.getX(), false );
+            } else {
+                int amount;
+                try {
+                    amount = Integer.parseInt( args[ 0 ] );
+                } catch ( NumberFormatException e ) {
+                    player.sendMessage( "That amount is invalid." );
+                    return;
+                }
 
-            Location lowest = sel.getMinimumPosition();
-            Location highest = sel.getMaximumPosition();
+                Direction dir;
+                try {
+                    dir = Direction.valueOf( args[ 1 ].toUpperCase() );
+                } catch ( IllegalArgumentException e ) {
+                    player.sendMessage( "That direction is invalid." );
+                    return;
+                }
 
-            switch( dir ) {
-                case UP:
-                case NORTH:
-                case EAST:
-                    dir.addToLocation( highest, amount );
-                    break;
+                lowest = sel.getMinimumPosition();
+                highest = sel.getMaximumPosition();
 
-                case DOWN:
-                case SOUTH:
-                case WEST:
-                    dir.addToLocation( lowest, amount );
-                    break;
+                switch( dir ) {
+                    case UP:
+                    case NORTH:
+                    case EAST:
+                        dir.addToLocation( highest, amount );
+                        break;
+
+                    case DOWN:
+                    case SOUTH:
+                    case WEST:
+                        dir.addToLocation( lowest, amount );
+                        break;
+                }
             }
 
             sel.setPositions( lowest, highest );

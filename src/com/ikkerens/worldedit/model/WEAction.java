@@ -24,6 +24,8 @@ public class WEAction {
 
         if ( this.recordAction )
             this.undoList = new ArrayList< SimpleEntry< Integer[], Short > >();
+
+        this.chunks = new HashSet< Chunk >();
     }
 
     public void setBlock( int x, int y, int z, short blockID ) throws BlockLimitException {
@@ -38,7 +40,7 @@ public class WEAction {
 
             this.world.setBlockWithoutUpdate( x, y, z, blockID );
 
-            this.chunks.add( this.world.getChunk( x, y, z, false ) );
+            this.chunks.add( this.world.getChunk( x, y, z, true ) );
 
             this.affected++;
         }
@@ -57,7 +59,8 @@ public class WEAction {
 
     public void finish() {
         for ( Chunk ch : this.chunks )
-            ch.calculateLight();
+            if ( ch != null )
+                ch.recalculateLight();
         this.chunks.clear();
     }
 
