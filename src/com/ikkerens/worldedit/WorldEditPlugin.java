@@ -6,14 +6,15 @@ import com.ikkerens.worldedit.commands.ExpandCommand;
 import com.ikkerens.worldedit.commands.InOutSetCommand;
 import com.ikkerens.worldedit.commands.LimitCommand;
 import com.ikkerens.worldedit.commands.LoadCommand;
+import com.ikkerens.worldedit.commands.OutlineCommand;
 import com.ikkerens.worldedit.commands.PasteCommand;
 import com.ikkerens.worldedit.commands.PositionCommand;
 import com.ikkerens.worldedit.commands.ReplaceCommand;
 import com.ikkerens.worldedit.commands.SaveCommand;
 import com.ikkerens.worldedit.commands.SetCommand;
 import com.ikkerens.worldedit.commands.ShiftCommand;
+import com.ikkerens.worldedit.commands.SphereCommand;
 import com.ikkerens.worldedit.commands.UndoCommand;
-import com.ikkerens.worldedit.commands.OutlineCommand;
 import com.ikkerens.worldedit.commands.WandCommand;
 import com.ikkerens.worldedit.wand.Wand;
 import com.ikkerens.worldedit.wand.WandListener;
@@ -45,6 +46,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         pm.registerCommand( "/set", new SetCommand( this ) );
         pm.registerCommand( "/replace", new String[] { "/repl" }, new ReplaceCommand( this ) );
         pm.registerCommand( "/outline", new String[] { "/walls" }, new OutlineCommand( this ) );
+        pm.registerCommand( "/sphere", new String[] { "/hsphere" }, new SphereCommand( this ) );
         pm.registerCommand( "/undo", new UndoCommand( this ) );
 
         // Selection

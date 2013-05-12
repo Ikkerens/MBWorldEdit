@@ -57,6 +57,14 @@ public class Selection {
         return count;
     }
 
+    public Location getPosition1() {
+        return this.pos1;
+    }
+
+    public Location getPosition2() {
+        return this.pos2;
+    }
+
     public Location getMinimumPosition() {
         return Constructors.newLocation( this.pos1.getWorld(), Math.min( this.pos1.getX(), this.pos2.getX() ), Math.min( this.pos1.getY(), this.pos2.getY() ), Math.min( this.pos1.getZ(), this.pos2.getZ() ) );
     }
