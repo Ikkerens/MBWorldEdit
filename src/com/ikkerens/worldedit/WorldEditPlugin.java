@@ -9,6 +9,7 @@ import com.ikkerens.worldedit.commands.LoadCommand;
 import com.ikkerens.worldedit.commands.OutlineCommand;
 import com.ikkerens.worldedit.commands.PasteCommand;
 import com.ikkerens.worldedit.commands.PositionCommand;
+import com.ikkerens.worldedit.commands.PyramidCommand;
 import com.ikkerens.worldedit.commands.ReplaceCommand;
 import com.ikkerens.worldedit.commands.SaveCommand;
 import com.ikkerens.worldedit.commands.SetCommand;
@@ -47,6 +48,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         pm.registerCommand( "/replace", new String[] { "/repl" }, new ReplaceCommand( this ) );
         pm.registerCommand( "/outline", new String[] { "/walls" }, new OutlineCommand( this ) );
         pm.registerCommand( "/sphere", new String[] { "/hsphere" }, new SphereCommand( this ) );
+        pm.registerCommand( "/pyramid", new String[] { "/hpyramid" }, new PyramidCommand( this ) );
         pm.registerCommand( "/undo", new UndoCommand( this ) );
 
         // Selection
