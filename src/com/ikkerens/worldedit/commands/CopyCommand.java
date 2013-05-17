@@ -9,7 +9,7 @@ import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class CopyCommand extends ActionCommand {
+public class CopyCommand extends ActionCommand<WorldEditPlugin> {
 
     public CopyCommand( WorldEditPlugin plugin ) {
         super( plugin );

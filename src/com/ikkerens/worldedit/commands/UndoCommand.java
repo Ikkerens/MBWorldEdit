@@ -4,7 +4,7 @@ import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.mbserver.api.game.Player;
 
-public class UndoCommand extends ActionCommand {
+public class UndoCommand extends ActionCommand<WorldEditPlugin> {
 
     public UndoCommand( WorldEditPlugin plugin ) {
         super( plugin );

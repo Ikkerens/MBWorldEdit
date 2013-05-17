@@ -1,16 +1,16 @@
 package com.ikkerens.worldedit.handlers;
 
-import com.ikkerens.worldedit.WorldEditPlugin;
 import com.mbserver.api.CommandExecutor;
 import com.mbserver.api.CommandSender;
+import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.game.Player;
 
-public abstract class AbstractCommand extends AbstractHandler implements CommandExecutor {
+public abstract class AbstractCommand<P extends MBServerPlugin> extends AbstractHandler<P> implements CommandExecutor {
     protected final static String NEED_SELECTION = "You need a valid selection to do this.";
     protected final static String FINISHED_DONE  = "Action of %s blocks completed in %s seconds.";
     protected final static String FINISHED_LIMIT = "Hit limit of %s blocks after %s seconds.";
 
-    public AbstractCommand( WorldEditPlugin plugin ) {
+    public AbstractCommand( P plugin ) {
         super( plugin );
     }
 

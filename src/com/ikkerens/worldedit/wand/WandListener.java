@@ -5,7 +5,7 @@ import com.ikkerens.worldedit.handlers.AbstractListener;
 import com.mbserver.api.events.BlockPlaceEvent;
 import com.mbserver.api.events.EventHandler;
 
-public class WandListener extends AbstractListener {
+public class WandListener extends AbstractListener<WorldEditPlugin> {
 
     public WandListener( WorldEditPlugin plugin ) {
         super( plugin );

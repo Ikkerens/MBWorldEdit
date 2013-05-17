@@ -11,7 +11,7 @@ import com.ikkerens.worldedit.model.WEAction;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class SphereCommand extends ActionCommand {
+public class SphereCommand extends ActionCommand<WorldEditPlugin> {
 
     public SphereCommand( WorldEditPlugin plugin ) {
         super( plugin );

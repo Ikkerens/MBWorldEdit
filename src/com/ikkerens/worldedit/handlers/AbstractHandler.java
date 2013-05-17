@@ -1,17 +1,17 @@
 package com.ikkerens.worldedit.handlers;
 
-import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.model.Session;
+import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.game.Player;
 
-public class AbstractHandler {
-    private WorldEditPlugin plugin;
+public class AbstractHandler<P extends MBServerPlugin> {
+    private P plugin;
 
-    public AbstractHandler( WorldEditPlugin plugin ) {
+    public AbstractHandler( P plugin ) {
         this.plugin = plugin;
     }
 
-    protected final WorldEditPlugin getPlugin() {
+    protected final P getPlugin() {
         return this.plugin;
     }
 

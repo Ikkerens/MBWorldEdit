@@ -3,7 +3,7 @@ package com.ikkerens.worldedit.model;
 import java.util.LinkedList;
 
 import com.ikkerens.worldedit.Config;
-import com.ikkerens.worldedit.WorldEditPlugin;
+import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
@@ -17,7 +17,7 @@ public class Session {
     private int                    undoLimit;
     private int                    limit;
 
-    public Session( WorldEditPlugin plugin, Player player ) {
+    public Session( MBServerPlugin plugin, Player player ) {
         this.player = player;
         this.selection = new Selection( this );
         this.history = new LinkedList< WEAction >();

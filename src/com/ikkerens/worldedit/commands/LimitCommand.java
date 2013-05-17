@@ -5,7 +5,7 @@ import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.mbserver.api.game.Player;
 
-public class LimitCommand extends AbstractCommand {
+public class LimitCommand extends AbstractCommand<WorldEditPlugin> {
 
     public LimitCommand( WorldEditPlugin plugin ) {
         super( plugin );

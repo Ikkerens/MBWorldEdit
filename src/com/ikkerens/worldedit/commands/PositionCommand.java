@@ -5,7 +5,7 @@ import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.mbserver.api.game.Player;
 
-public class PositionCommand extends AbstractCommand {
+public class PositionCommand extends AbstractCommand<WorldEditPlugin> {
 
     public PositionCommand( WorldEditPlugin plugin ) {
         super( plugin );

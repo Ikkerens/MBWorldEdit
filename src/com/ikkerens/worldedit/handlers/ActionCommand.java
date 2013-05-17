@@ -1,11 +1,11 @@
 package com.ikkerens.worldedit.handlers;
 
-import com.ikkerens.worldedit.WorldEditPlugin;
 import com.mbserver.api.CommandSender;
+import com.mbserver.api.MBServerPlugin;
 
-public abstract class ActionCommand extends AbstractCommand {
+public abstract class ActionCommand< P extends MBServerPlugin > extends AbstractCommand< P > {
 
-    public ActionCommand( WorldEditPlugin plugin ) {
+    public ActionCommand( P plugin ) {
         super( plugin );
     }
 

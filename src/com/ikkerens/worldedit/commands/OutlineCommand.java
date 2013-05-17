@@ -12,7 +12,7 @@ import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class OutlineCommand extends ActionCommand {
+public class OutlineCommand extends ActionCommand<WorldEditPlugin> {
 
     public OutlineCommand( WorldEditPlugin plugin ) {
         super( plugin );

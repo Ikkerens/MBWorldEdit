@@ -5,7 +5,7 @@ import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.wand.Wand;
 import com.mbserver.api.game.Player;
 
-public class WandCommand extends AbstractCommand {
+public class WandCommand extends AbstractCommand<WorldEditPlugin> {
 
     public WandCommand( WorldEditPlugin plugin ) {
         super( plugin );

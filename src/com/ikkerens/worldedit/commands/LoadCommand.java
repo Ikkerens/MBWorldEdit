@@ -5,7 +5,7 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Clipboard;
 import com.mbserver.api.game.Player;
 
-public class LoadCommand extends ActionCommand {
+public class LoadCommand extends ActionCommand<WorldEditPlugin> {
 
     public LoadCommand( WorldEditPlugin plugin ) {
         super( plugin );

@@ -7,7 +7,7 @@ import com.ikkerens.worldedit.wand.Direction;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class ShiftCommand extends AbstractCommand {
+public class ShiftCommand extends AbstractCommand<WorldEditPlugin> {
 
     public ShiftCommand( WorldEditPlugin plugin ) {
         super( plugin );

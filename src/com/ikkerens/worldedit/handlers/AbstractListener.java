@@ -1,11 +1,11 @@
 package com.ikkerens.worldedit.handlers;
 
-import com.ikkerens.worldedit.WorldEditPlugin;
+import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.events.Listener;
 
-public abstract class AbstractListener extends AbstractHandler implements Listener {
+public abstract class AbstractListener<P extends MBServerPlugin> extends AbstractHandler<P> implements Listener {
 
-    public AbstractListener( WorldEditPlugin plugin ) {
+    public AbstractListener( P plugin ) {
         super( plugin );
     }
 

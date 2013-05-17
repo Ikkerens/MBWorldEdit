@@ -7,7 +7,7 @@ import com.ikkerens.worldedit.wand.Direction;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class ExpandCommand extends AbstractCommand {
+public class ExpandCommand extends AbstractCommand<WorldEditPlugin> {
 
     public ExpandCommand( WorldEditPlugin plugin ) {
         super( plugin );

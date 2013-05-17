@@ -13,7 +13,7 @@ import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class ReplaceCommand extends ActionCommand {
+public class ReplaceCommand extends ActionCommand<WorldEditPlugin> {
 
     public ReplaceCommand( WorldEditPlugin plugin ) {
         super( plugin );

@@ -6,7 +6,7 @@ import com.ikkerens.worldedit.model.Selection;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class InOutSetCommand extends AbstractCommand {
+public class InOutSetCommand extends AbstractCommand<WorldEditPlugin> {
 
     public InOutSetCommand( WorldEditPlugin plugin ) {
         super( plugin );

@@ -10,7 +10,7 @@ import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class PasteCommand extends ActionCommand {
+public class PasteCommand extends ActionCommand<WorldEditPlugin> {
 
     public PasteCommand( WorldEditPlugin plugin ) {
         super( plugin );

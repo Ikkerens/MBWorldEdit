@@ -12,7 +12,7 @@ import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class SetCommand extends ActionCommand {
+public class SetCommand extends ActionCommand<WorldEditPlugin> {
 
     public SetCommand( WorldEditPlugin plugin ) {
         super( plugin );

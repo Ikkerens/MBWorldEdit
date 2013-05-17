@@ -11,7 +11,7 @@ import com.ikkerens.worldedit.model.WEAction;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class PyramidCommand extends ActionCommand {
+public class PyramidCommand extends ActionCommand<WorldEditPlugin> {
 
     public PyramidCommand( WorldEditPlugin plugin ) {
         super( plugin );
