@@ -8,18 +8,19 @@ import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.SetBlockType;
 import com.ikkerens.worldedit.model.WEAction;
+
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class SphereCommand extends ActionCommand<WorldEditPlugin> {
+public class SphereCommand extends ActionCommand< WorldEditPlugin > {
 
-    public SphereCommand( WorldEditPlugin plugin ) {
+    public SphereCommand( final WorldEditPlugin plugin ) {
         super( plugin );
     }
 
     @Override
-    protected void execute( String label, Player player, String[] args ) {
-        if ( args.length != 2 && args.length != 4 ) {
+    protected void execute( final String label, final Player player, final String[] args ) {
+        if ( ( args.length != 2 ) && ( args.length != 4 ) ) {
             player.sendMessage( "Usage: /" + label + " <block> <radius> [radiusY radiusZ]" );
             return;
         }
@@ -27,7 +28,7 @@ public class SphereCommand extends ActionCommand<WorldEditPlugin> {
         SetBlockType type;
         try {
             type = new SetBlockType( args[ 0 ] );
-        } catch ( BlockNotFoundException e ) {
+        } catch ( final BlockNotFoundException e ) {
             player.sendMessage( e.getMessage() );
             return;
         }
@@ -43,30 +44,30 @@ public class SphereCommand extends ActionCommand<WorldEditPlugin> {
                 rY = rX;
                 rZ = rX;
             }
-        } catch ( NumberFormatException e ) {
+        } catch ( final NumberFormatException e ) {
             player.sendMessage( "Invalid number" );
             return;
         }
 
-        Session session = this.getSession( player );
-        Selection sel = session.getSelection();
+        final Session session = this.getSession( player );
+        final Selection sel = session.getSelection();
 
-        Location center = sel.getPosition1() != null ? sel.getPosition1() : ( sel.getPosition2() != null ? sel.getPosition2() : null );
+        final Location center = sel.getPosition1() != null ? sel.getPosition1() : ( sel.getPosition2() != null ? sel.getPosition2() : null );
         if ( center == null ) {
             player.sendMessage( "You need to mark a center with position 1 to create a sphere." );
             return;
         }
 
-        Selection cSel = new Selection( null );
+        final Selection cSel = new Selection( null );
         cSel.setPositions( center, center.add( rX, rY, rZ, true ) );
 
-        long start = System.currentTimeMillis();
-        WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+        final long start = System.currentTimeMillis();
+        final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
 
         try {
             this.generateSphere( wea, center, type, rX, rY, rZ, label.equalsIgnoreCase( "/sphere" ) );
             wea.finish();
-        } catch ( BlockLimitException e ) {
+        } catch ( final BlockLimitException e ) {
             player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
             return;
         }
@@ -74,39 +75,39 @@ public class SphereCommand extends ActionCommand<WorldEditPlugin> {
         player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
     }
 
-    private void generateSphere( WEAction wea, Location center, SetBlockType type, double rX, double rY, double rZ, boolean filled ) throws BlockLimitException {
+    private void generateSphere( final WEAction wea, final Location center, final SetBlockType type, double rX, double rY, double rZ, final boolean filled ) throws BlockLimitException {
         rX += 0.5;
         rY += 0.5;
         rZ += 0.5;
 
-        int cX = center.getBlockX();
-        int cY = center.getBlockY();
-        int cZ = center.getBlockZ();
+        final int cX = center.getBlockX();
+        final int cY = center.getBlockY();
+        final int cZ = center.getBlockZ();
 
-        double invertedRX = 1 / rX;
-        double invertedRY = 1 / rY;
-        double invertedRZ = 1 / rZ;
+        final double invertedRX = 1 / rX;
+        final double invertedRY = 1 / rY;
+        final double invertedRZ = 1 / rZ;
 
-        int ceilRX = (int) Math.ceil( rX );
-        int ceilRY = (int) Math.ceil( rY );
-        int ceilRZ = (int) Math.ceil( rZ );
+        final int ceilRX = (int) Math.ceil( rX );
+        final int ceilRY = (int) Math.ceil( rY );
+        final int ceilRZ = (int) Math.ceil( rZ );
 
         double nextX = 0;
         forX: for ( int ix = 0; ix <= ceilRX; ix++ ) {
-            double ax = nextX;
+            final double ax = nextX;
             nextX = ( ix + 1 ) * invertedRX;
 
             double nextY = 0;
             forY: for ( int iy = 0; iy <= ceilRY; iy++ ) {
-                double ay = nextY;
+                final double ay = nextY;
                 nextY = ( iy + 1 ) * invertedRY;
 
                 double nextZ = 0;
                 forZ: for ( int iz = 0; iz <= ceilRZ; iz++ ) {
-                    double az = nextZ;
+                    final double az = nextZ;
                     nextZ = ( iz + 1 ) * invertedRZ;
 
-                    double distance = distanceCalc( ax, ay, az );
+                    final double distance = this.distanceCalc( ax, ay, az );
 
                     if ( distance > 1 ) {
                         if ( iz == 0 ) {
@@ -117,7 +118,7 @@ public class SphereCommand extends ActionCommand<WorldEditPlugin> {
                         break forZ;
                     }
 
-                    if ( !filled && distanceCalc( nextX, ay, az ) <= 1 && distanceCalc( ax, nextY, az ) <= 1 && distanceCalc( ax, ay, nextZ ) <= 1 )
+                    if ( !filled && ( this.distanceCalc( nextX, ay, az ) <= 1 ) && ( this.distanceCalc( ax, nextY, az ) <= 1 ) && ( this.distanceCalc( ax, ay, nextZ ) <= 1 ) )
                         continue;
 
                     wea.setBlock( cX + ix, cY + iy, cZ + iz, type );
@@ -135,7 +136,7 @@ public class SphereCommand extends ActionCommand<WorldEditPlugin> {
         }
     }
 
-    private double distanceCalc( double x, double y, double z ) {
+    private double distanceCalc( final double x, final double y, final double z ) {
         return ( x * x ) + ( y * y ) + ( z * z );
     }
 }

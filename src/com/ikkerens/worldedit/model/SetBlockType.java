@@ -7,17 +7,17 @@ import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.Parser;
 
 public class SetBlockType extends Parser {
-    private Random                  random;
-    private TreeMap< Float, Short > validBlocks;
-    private float                   total;
+    private final Random                  random;
+    private final TreeMap< Float, Short > validBlocks;
+    private float                         total;
 
-    public SetBlockType( String rawBlocks ) throws BlockNotFoundException {
+    public SetBlockType( final String rawBlocks ) throws BlockNotFoundException {
         this.random = new Random();
         this.validBlocks = new TreeMap< Float, Short >();
-        String[] blocks = rawBlocks.split( "," );
+        final String[] blocks = rawBlocks.split( "," );
 
-        for ( String block : blocks ) {
-            String[] perc = block.split( "%" );
+        for ( final String block : blocks ) {
+            final String[] perc = block.split( "%" );
 
             float chance;
             String blk;
@@ -30,13 +30,13 @@ public class SetBlockType extends Parser {
                 blk = perc[ 0 ];
             }
 
-            short id = this.getItemID( blk );
-            this.validBlocks.put( total, id );
+            final short id = this.getItemID( blk );
+            this.validBlocks.put( this.total, id );
             this.total += chance;
         }
     }
 
     public short getNextBlock() {
-        return this.validBlocks.floorEntry( this.random.nextFloat() * total ).getValue();
+        return this.validBlocks.floorEntry( this.random.nextFloat() * this.total ).getValue();
     }
 }

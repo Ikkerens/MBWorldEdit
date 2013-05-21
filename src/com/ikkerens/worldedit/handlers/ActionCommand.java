@@ -5,7 +5,7 @@ import com.mbserver.api.MBServerPlugin;
 
 public abstract class ActionCommand< P extends MBServerPlugin > extends AbstractCommand< P > {
 
-    public ActionCommand( P plugin ) {
+    public ActionCommand( final P plugin ) {
         super( plugin );
     }
 

@@ -6,17 +6,17 @@ import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.Parser;
 
 public class MatchBlockType extends Parser {
-    private HashSet< Short > ids;
+    private final HashSet< Short > ids;
 
-    public MatchBlockType( String rawBlocks ) throws BlockNotFoundException {
+    public MatchBlockType( final String rawBlocks ) throws BlockNotFoundException {
         this.ids = new HashSet< Short >();
-        String[] blocks = rawBlocks.split( "," );
+        final String[] blocks = rawBlocks.split( "," );
 
-        for ( String block : blocks )
+        for ( final String block : blocks )
             this.ids.add( this.getItemID( block ) );
     }
 
-    public boolean matches( short id ) {
+    public boolean matches( final short id ) {
         return this.ids.contains( id );
     }
 }

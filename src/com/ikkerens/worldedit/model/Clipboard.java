@@ -11,62 +11,62 @@ import java.util.zip.Inflater;
 
 public class Clipboard {
     // Relative towards player
-    private int         rX, rY, rZ;
-    private short[][][] blocks;
+    private final int         rX, rY, rZ;
+    private final short[][][] blocks;
 
-    public Clipboard( int rX, int rY, int rZ, short[][][] blocks ) {
+    public Clipboard( final int rX, final int rY, final int rZ, final short[][][] blocks ) {
         this.rX = rX;
         this.rY = rY;
         this.rZ = rZ;
         this.blocks = blocks;
     }
 
-    public static Clipboard loadFromFile( String name ) {
+    public static Clipboard loadFromFile( final String name ) {
         RandomAccessFile file = null;
 
         try {
-            File schemFile = new File( String.format( "plugins/MBWorldEdit/schematics/%s.mbschem", name ) );
+            final File schemFile = new File( String.format( "plugins/MBWorldEdit/schematics/%s.mbschem", name ) );
             schemFile.getParentFile().mkdirs();
 
             if ( !schemFile.exists() )
                 return null;
 
             file = new RandomAccessFile( schemFile.getAbsolutePath(), "r" );
-            int oSize = file.readInt();
-            int cSize = file.readInt();
-            byte[] compressed = new byte[ cSize ];
-            byte[] decompressed = new byte[ oSize ];
+            final int oSize = file.readInt();
+            final int cSize = file.readInt();
+            final byte[] compressed = new byte[ cSize ];
+            final byte[] decompressed = new byte[ oSize ];
 
             int loaded = 0;
             while ( loaded != cSize )
                 loaded += file.read( compressed, loaded, cSize - loaded );
 
-            Inflater decompressor = new Inflater();
+            final Inflater decompressor = new Inflater();
             decompressor.setInput( compressed );
             decompressor.inflate( decompressed );
             decompressor.end();
 
-            ByteBuffer schem = ByteBuffer.wrap( decompressed );
+            final ByteBuffer schem = ByteBuffer.wrap( decompressed );
 
-            int rX = schem.getInt();
-            int rY = schem.getInt();
-            int rZ = schem.getInt();
-            short[][][] clp = new short[ schem.getInt() ][ schem.getInt() ][ schem.getInt() ];
+            final int rX = schem.getInt();
+            final int rY = schem.getInt();
+            final int rZ = schem.getInt();
+            final short[][][] clp = new short[ schem.getInt() ][ schem.getInt() ][ schem.getInt() ];
 
-            ShortBuffer sBuf = schem.asShortBuffer();
+            final ShortBuffer sBuf = schem.asShortBuffer();
 
-            for ( int x = 0; x < clp.length; x++ )
+            for ( final short[][] element : clp )
                 for ( int y = 0; y < clp[ 0 ].length; y++ )
-                    sBuf.get( clp[ x ][ y ], 0, clp[ x ][ y ].length );
+                    sBuf.get( element[ y ], 0, element[ y ].length );
 
             return new Clipboard( rX, rY, rZ, clp );
-        } catch ( IOException e ) {
-        } catch ( DataFormatException e ) {
+        } catch ( final IOException e ) {
+        } catch ( final DataFormatException e ) {
         } finally {
             if ( file != null )
                 try {
                     file.close();
-                } catch ( IOException e ) {
+                } catch ( final IOException e ) {
                 }
         }
 
@@ -86,20 +86,20 @@ public class Clipboard {
     }
 
     public short[][][] getBlocks() {
-        return blocks;
+        return this.blocks;
     }
 
-    public boolean save( String name ) {
+    public boolean save( final String name ) {
         RandomAccessFile file = null;
 
         try {
-            File schemFile = new File( String.format( "plugins/MBWorldEdit/schematics/%s.mbschem", name ) );
+            final File schemFile = new File( String.format( "plugins/MBWorldEdit/schematics/%s.mbschem", name ) );
             schemFile.getParentFile().mkdirs();
 
             if ( schemFile.exists() )
                 schemFile.delete();
 
-            ByteBuffer byteBuf = ByteBuffer.allocate( 24 + this.blocks.length * this.blocks[ 0 ].length * this.blocks[ 0 ][ 0 ].length * 2 );
+            final ByteBuffer byteBuf = ByteBuffer.allocate( 24 + ( this.blocks.length * this.blocks[ 0 ].length * this.blocks[ 0 ][ 0 ].length * 2 ) );
 
             byteBuf.putInt( this.rX );
             byteBuf.putInt( this.rY );
@@ -108,18 +108,18 @@ public class Clipboard {
             byteBuf.putInt( this.blocks[ 0 ].length );
             byteBuf.putInt( this.blocks[ 0 ][ 0 ].length );
 
-            ShortBuffer sBuf = byteBuf.asShortBuffer();
-            for ( int x = 0; x < this.blocks.length; x++ )
-                for ( int y = 0; y < this.blocks[ x ].length; y++ )
-                    sBuf.put( this.blocks[ x ][ y ] );
+            final ShortBuffer sBuf = byteBuf.asShortBuffer();
+            for ( final short[][] block : this.blocks )
+                for ( int y = 0; y < block.length; y++ )
+                    sBuf.put( block[ y ] );
 
-            byte[] before = byteBuf.array();
-            byte[] result = new byte[ before.length ];
+            final byte[] before = byteBuf.array();
+            final byte[] result = new byte[ before.length ];
 
-            Deflater compressor = new Deflater( Deflater.BEST_COMPRESSION );
+            final Deflater compressor = new Deflater( Deflater.BEST_COMPRESSION );
             compressor.setInput( before );
             compressor.finish();
-            int cSize = compressor.deflate( result );
+            final int cSize = compressor.deflate( result );
             compressor.end();
 
             file = new RandomAccessFile( schemFile.getAbsolutePath(), "rw" );
@@ -128,12 +128,12 @@ public class Clipboard {
             file.write( result, 0, cSize );
 
             return true;
-        } catch ( IOException e ) {
+        } catch ( final IOException e ) {
         } finally {
             if ( file != null )
                 try {
                     file.close();
-                } catch ( IOException e ) {
+                } catch ( final IOException e ) {
                 }
         }
 

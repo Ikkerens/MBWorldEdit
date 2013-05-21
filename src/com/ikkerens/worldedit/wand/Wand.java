@@ -10,19 +10,19 @@ public class Wand {
     public static final Wand LEFT  = new Wand( 150, 14, 0 );
     public static final Wand RIGHT = new Wand( 151, 14, 1 );
 
-    private BlockType        type;
+    private final BlockType  type;
 
-    public Wand( int id, int x, int y ) {
+    public Wand( final int id, final int x, final int y ) {
         this.type = Constructors.newBlockType( id );
 
         this.type.addTexture( BlockFace.DEFAULT, x, y );
         // this.type.setCreative( false );
     }
 
-    public void register( BlockManager mgr ) {
+    public void register( final BlockManager mgr ) {
         try {
             mgr.registerBlockType( this.type );
-        } catch ( BlockTypeAlreadyRegisteredException e ) {
+        } catch ( final BlockTypeAlreadyRegisteredException e ) {
             e.fixIt();
         }
     }

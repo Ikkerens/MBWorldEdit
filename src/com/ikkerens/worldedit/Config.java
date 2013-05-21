@@ -1,9 +1,9 @@
 package com.ikkerens.worldedit;
 
 public class Config {
-    private int limit;
-    private int undo_treshold;
-    private int undo_history;
+    private final int limit;
+    private final int undo_treshold;
+    private final int undo_history;
 
     public Config() {
         this.limit = 500;

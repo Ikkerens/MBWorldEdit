@@ -5,16 +5,16 @@ import com.mbserver.api.CommandSender;
 import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.game.Player;
 
-public abstract class AbstractCommand<P extends MBServerPlugin> extends AbstractHandler<P> implements CommandExecutor {
+public abstract class AbstractCommand< P extends MBServerPlugin > extends AbstractHandler< P > implements CommandExecutor {
     protected final static String NEED_SELECTION = "You need a valid selection to do this.";
     protected final static String FINISHED_DONE  = "Action of %s blocks completed in %s seconds.";
     protected final static String FINISHED_LIMIT = "Hit limit of %s blocks after %s seconds.";
 
-    public AbstractCommand( P plugin ) {
+    public AbstractCommand( final P plugin ) {
         super( plugin );
     }
 
-    public void execute( String command, CommandSender sender, String[] args, String label ) {
+    public void execute( final String command, final CommandSender sender, final String[] args, final String label ) {
         if ( !( sender instanceof Player ) ) {
             sender.sendMessage( "WorldEdit can only be used by players." );
             return;

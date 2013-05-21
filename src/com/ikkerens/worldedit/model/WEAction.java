@@ -5,19 +5,20 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.ikkerens.worldedit.exceptions.BlockLimitException;
+
 import com.mbserver.api.game.Chunk;
 import com.mbserver.api.game.World;
 
 public class WEAction {
-    private World                                        world;
-    private boolean                                      recordAction;
-    private int                                          limit;
+    private final World                                  world;
+    private final boolean                                recordAction;
+    private final int                                    limit;
     private int                                          affected;
 
-    private HashSet< Chunk >                             chunks;
+    private final HashSet< Chunk >                       chunks;
     private ArrayList< SimpleEntry< Integer[], Short > > undoList;
 
-    WEAction( World world, boolean recordAction, int limit ) {
+    WEAction( final World world, final boolean recordAction, final int limit ) {
         this.world = world;
         this.recordAction = recordAction;
         this.limit = limit;
@@ -28,11 +29,11 @@ public class WEAction {
         this.chunks = new HashSet< Chunk >();
     }
 
-    public void setBlock( int x, int y, int z, short blockID ) throws BlockLimitException {
-        short current = this.world.getBlockID( x, y, z );
+    public void setBlock( final int x, final int y, final int z, final short blockID ) throws BlockLimitException {
+        final short current = this.world.getBlockID( x, y, z );
 
         if ( current != blockID ) {
-            if ( this.limit != -1 && this.affected >= this.limit )
+            if ( ( this.limit != -1 ) && ( this.affected >= this.limit ) )
                 throw new BlockLimitException();
 
             if ( this.recordAction )
@@ -46,19 +47,19 @@ public class WEAction {
         }
     }
 
-    public void setBlock( int x, int y, int z, SetBlockType type ) throws BlockLimitException {
+    public void setBlock( final int x, final int y, final int z, final SetBlockType type ) throws BlockLimitException {
         this.setBlock( x, y, z, type.getNextBlock() );
     }
 
     public void undo() {
-        for ( SimpleEntry< Integer[], Short > entry : this.undoList ) {
-            Integer[] keys = entry.getKey();
+        for ( final SimpleEntry< Integer[], Short > entry : this.undoList ) {
+            final Integer[] keys = entry.getKey();
             this.world.setBlockWithoutUpdate( keys[ 0 ], keys[ 1 ], keys[ 2 ], entry.getValue() );
         }
     }
 
     public void finish() {
-        for ( Chunk ch : this.chunks )
+        for ( final Chunk ch : this.chunks )
             if ( ch != null )
                 ch.recalculateLight();
         this.chunks.clear();

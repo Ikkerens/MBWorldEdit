@@ -19,6 +19,7 @@ import com.ikkerens.worldedit.commands.UndoCommand;
 import com.ikkerens.worldedit.commands.WandCommand;
 import com.ikkerens.worldedit.wand.Wand;
 import com.ikkerens.worldedit.wand.WandListener;
+
 import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.Manifest;
 import com.mbserver.api.PluginManager;
@@ -31,7 +32,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         this.getConfig();
         this.saveConfig();
 
-        PluginManager pm = this.getPluginManager();
+        final PluginManager pm = this.getPluginManager();
 
         // Set up wand
         Wand.LEFT.register( this.getBlockManager() );

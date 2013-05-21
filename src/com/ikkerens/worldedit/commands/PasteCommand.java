@@ -6,41 +6,42 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Clipboard;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.WEAction;
+
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class PasteCommand extends ActionCommand<WorldEditPlugin> {
+public class PasteCommand extends ActionCommand< WorldEditPlugin > {
 
-    public PasteCommand( WorldEditPlugin plugin ) {
+    public PasteCommand( final WorldEditPlugin plugin ) {
         super( plugin );
     }
 
     @Override
-    protected void execute( String label, Player player, String[] args ) {
-        Session session = this.getSession( player );
-        Clipboard clipboard = session.getClipboard();
+    protected void execute( final String label, final Player player, final String[] args ) {
+        final Session session = this.getSession( player );
+        final Clipboard clipboard = session.getClipboard();
         if ( clipboard != null ) {
-            Location pLoc = player.getLocation();
-            World world = pLoc.getWorld();
-            int oX = pLoc.getBlockX() + clipboard.getRelativeX();
-            int oY = pLoc.getBlockY() + clipboard.getRelativeY();
-            int oZ = pLoc.getBlockZ() + clipboard.getRelativeZ();
-            short[][][] blocks = clipboard.getBlocks();
+            final Location pLoc = player.getLocation();
+            final World world = pLoc.getWorld();
+            final int oX = pLoc.getBlockX() + clipboard.getRelativeX();
+            final int oY = pLoc.getBlockY() + clipboard.getRelativeY();
+            final int oZ = pLoc.getBlockZ() + clipboard.getRelativeZ();
+            final short[][][] blocks = clipboard.getBlocks();
 
-            WEAction wea = session.newAction( world, blocks.length * blocks[ 0 ].length * blocks[ 0 ][ 0 ].length );
-            boolean skipAir = args.length == 1 && args[ 0 ].equalsIgnoreCase( "-a" );
+            final WEAction wea = session.newAction( world, blocks.length * blocks[ 0 ].length * blocks[ 0 ][ 0 ].length );
+            final boolean skipAir = ( args.length == 1 ) && args[ 0 ].equalsIgnoreCase( "-a" );
 
-            long start = System.currentTimeMillis();
+            final long start = System.currentTimeMillis();
 
             try {
                 for ( int x = 0; x < blocks.length; x++ )
                     for ( int y = 0; y < blocks[ x ].length; y++ )
                         for ( int z = 0; z < blocks[ x ][ y ].length; z++ )
-                            if ( !skipAir || blocks[ x ][ y ][ z ] != 0 )
+                            if ( !skipAir || ( blocks[ x ][ y ][ z ] != 0 ) )
                                 wea.setBlock( x + oX, y + oY, z + oZ, blocks[ x ][ y ][ z ] );
                 wea.finish();
-            } catch ( BlockLimitException e ) {
+            } catch ( final BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
             }

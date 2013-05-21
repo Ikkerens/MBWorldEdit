@@ -3,22 +3,23 @@ package com.ikkerens.worldedit.commands;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Clipboard;
+
 import com.mbserver.api.game.Player;
 
-public class LoadCommand extends ActionCommand<WorldEditPlugin> {
+public class LoadCommand extends ActionCommand< WorldEditPlugin > {
 
-    public LoadCommand( WorldEditPlugin plugin ) {
+    public LoadCommand( final WorldEditPlugin plugin ) {
         super( plugin );
     }
 
     @Override
-    protected void execute( String label, Player player, String[] args ) {
+    protected void execute( final String label, final Player player, final String[] args ) {
         if ( args.length != 1 ) {
             player.sendMessage( "Usage: /" + label + " <filename>" );
             return;
         }
 
-        Clipboard clb = Clipboard.loadFromFile( args[ 0 ] );
+        final Clipboard clb = Clipboard.loadFromFile( args[ 0 ] );
 
         if ( clb != null ) {
             this.getSession( player ).setClipboard( clb );

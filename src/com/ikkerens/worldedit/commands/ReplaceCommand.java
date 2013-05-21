@@ -9,42 +9,43 @@ import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.SetBlockType;
 import com.ikkerens.worldedit.model.WEAction;
+
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
-public class ReplaceCommand extends ActionCommand<WorldEditPlugin> {
+public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
 
-    public ReplaceCommand( WorldEditPlugin plugin ) {
+    public ReplaceCommand( final WorldEditPlugin plugin ) {
         super( plugin );
     }
 
     @Override
-    protected void execute( String label, Player player, String[] args ) {
+    protected void execute( final String label, final Player player, final String[] args ) {
         if ( args.length != 2 ) {
             player.sendMessage( "Usage: /" + label + " <match> <replacement>" );
             return;
         }
 
-        Session session = this.getSession( player );
-        Selection sel = session.getSelection();
+        final Session session = this.getSession( player );
+        final Selection sel = session.getSelection();
         if ( sel.isValid() ) {
-            Location lowest = sel.getMinimumPosition();
-            Location highest = sel.getMaximumPosition();
-            World world = lowest.getWorld();
+            final Location lowest = sel.getMinimumPosition();
+            final Location highest = sel.getMaximumPosition();
+            final World world = lowest.getWorld();
 
             SetBlockType type;
             MatchBlockType match;
             try {
                 type = new SetBlockType( args[ 1 ] );
                 match = new MatchBlockType( args[ 0 ] );
-            } catch ( BlockNotFoundException e ) {
+            } catch ( final BlockNotFoundException e ) {
                 player.sendMessage( e.getMessage() );
                 return;
             }
 
-            long start = System.currentTimeMillis();
-            WEAction wea = session.newAction( world, sel.getCount() );
+            final long start = System.currentTimeMillis();
+            final WEAction wea = session.newAction( world, sel.getCount() );
 
             try {
                 for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
@@ -53,7 +54,7 @@ public class ReplaceCommand extends ActionCommand<WorldEditPlugin> {
                             if ( match.matches( world.getBlockID( x, y, z ) ) )
                                 wea.setBlock( x, y, z, type );
                 wea.finish();
-            } catch ( BlockLimitException e ) {
+            } catch ( final BlockLimitException e ) {
                 player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                 return;
             }
