@@ -42,8 +42,8 @@ public class InOutSetCommand extends AbstractCommand< WorldEditPlugin > {
             final Location lowest = sel.getMinimumPosition();
             final Location highest = sel.getMaximumPosition();
 
-            int modX = ( args.length == 2 ) && !args[ 0 ].equalsIgnoreCase( "-h" ) ? amount : 0;
-            int modY = ( args.length == 2 ) && !args[ 0 ].equalsIgnoreCase( "-v" ) ? amount : 0;
+            int modX = ( args.length == 1 ) || ( ( args.length == 2 ) && args[ 0 ].equalsIgnoreCase( "-h" ) ) ? amount : 0;
+            int modY = ( args.length == 1 ) || ( ( args.length == 2 ) && args[ 0 ].equalsIgnoreCase( "-v" ) ) ? amount : 0;
 
             if ( label.equalsIgnoreCase( "/inset" ) ) {
                 modX *= -1;

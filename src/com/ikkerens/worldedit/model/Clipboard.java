@@ -110,8 +110,8 @@ public class Clipboard {
 
             final ShortBuffer sBuf = byteBuf.asShortBuffer();
             for ( final short[][] block : this.blocks )
-                for ( int y = 0; y < block.length; y++ )
-                    sBuf.put( block[ y ] );
+                for ( final short[] element : block )
+                    sBuf.put( element );
 
             final byte[] before = byteBuf.array();
             final byte[] result = new byte[ before.length ];
