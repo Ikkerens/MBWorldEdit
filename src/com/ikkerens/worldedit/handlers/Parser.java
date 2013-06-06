@@ -11,8 +11,9 @@ public abstract class Parser {
         } catch ( final NumberFormatException e ) {
             try {
                 final Material m = Material.valueOf( arg.toUpperCase() );
-                if ( m.getBlockType() != null )
-                    return m.getID();
+                if ( m.getBlockType() == null )
+                    throw new BlockNotFoundException( String.format( "%s is not a block.", arg ) );
+                return m.getID();
             } catch ( final IllegalArgumentException ignored ) {
             }
         }
