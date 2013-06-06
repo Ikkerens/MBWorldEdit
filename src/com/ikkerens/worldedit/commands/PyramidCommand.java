@@ -46,7 +46,7 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
 
         final Location center = sel.getPosition1() != null ? sel.getPosition1() : ( sel.getPosition2() != null ? sel.getPosition2() : null );
         if ( center == null ) {
-            player.sendMessage( "You need to mark a center with position 1 to create a sphere." );
+            player.sendMessage( "You need to mark a center with position 1 to create a pyramid." );
             return;
         }
 

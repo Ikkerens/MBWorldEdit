@@ -26,7 +26,7 @@ public class SaveCommand extends ActionCommand< WorldEditPlugin > {
         }
 
         if ( clb.save( args[ 0 ] ) )
-            player.sendMessage( "Clipboard saved to \"plugins/MBWorldEdit/" + args[ 0 ] + ".mbschem\"" );
+            player.sendMessage( String.format( "Clipboard saved to \"plugins/MBWorldEdit/%s.mbschem\".", args[ 0 ] ) );
         else
             player.sendMessage( "Saving clipboard failed!" );
     }
