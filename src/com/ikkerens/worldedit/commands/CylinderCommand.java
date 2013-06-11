@@ -53,7 +53,7 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
 
         final Location center = sel.getPosition1() != null ? sel.getPosition1() : ( sel.getPosition2() != null ? sel.getPosition2() : null );
         if ( center == null ) {
-            player.sendMessage( "You need to mark a center with position 1 to create a sphere." );
+            player.sendMessage( "You need to mark a center with position 1 to create a cylinder." );
             return;
         }
 
@@ -74,9 +74,9 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
         player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
     }
 
-    private void generateCylinder( final WEAction wea, Location center, final SetBlockType type, int height, int rX, int rZ, final boolean filled ) throws BlockLimitException {
-        rX += 0.5;
-        rZ += 0.5;
+    private void generateCylinder( final WEAction wea, Location center, final SetBlockType type, int height, double radiusX, double radiusZ, final boolean filled ) throws BlockLimitException {
+        radiusX += 0.5;
+        radiusZ += 0.5;
 
         if ( height == 0 )
             return;
@@ -94,23 +94,24 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
         final int cY = center.getBlockY();
         final int cZ = center.getBlockZ();
 
-        final double invRadiusX = 1 / rX;
-        final double invRadiusZ = 1 / rZ;
+        final double invRadiusX = 1 / radiusX;
+        final double invRadiusZ = 1 / radiusZ;
 
-        final int ceilRadiusX = (int) Math.ceil( rX );
-        final int ceilRadiusZ = (int) Math.ceil( rZ );
+        final int ceilRadiusX = (int) Math.ceil( radiusX );
+        final int ceilRadiusZ = (int) Math.ceil( radiusZ );
 
         double nextXn = 0;
         forX: for ( int x = 0; x <= ceilRadiusX; ++x ) {
             final double xn = nextXn;
             nextXn = ( x + 1 ) * invRadiusX;
+
             double nextZn = 0;
             forZ: for ( int z = 0; z <= ceilRadiusZ; ++z ) {
                 final double zn = nextZn;
                 nextZn = ( z + 1 ) * invRadiusZ;
 
-                final double distanceSq = this.distanceCalc( xn, zn );
-                if ( distanceSq > 1 ) {
+                final double distance = this.distanceCalc( xn, zn );
+                if ( distance > 1 ) {
                     if ( z == 0 )
                         break forX;
                     break forZ;
@@ -120,7 +121,7 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
                     if ( ( this.distanceCalc( nextXn, zn ) <= 1 ) && ( this.distanceCalc( xn, nextZn ) <= 1 ) )
                         continue;
 
-                for ( int y = 0; y < height; ++y ) {
+                for ( int y = 0; y < height; y++ ) {
                     wea.setBlock( cX + x, cY + y, cZ + z, type );
                     wea.setBlock( cX - x, cY + y, cZ + z, type );
                     wea.setBlock( cX + x, cY + y, cZ - z, type );
