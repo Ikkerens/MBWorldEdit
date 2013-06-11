@@ -35,7 +35,7 @@ public class OutlineCommand extends ActionCommand< WorldEditPlugin > {
 
             SetBlockType type;
             try {
-                type = new SetBlockType( args[ 0 ] );
+                type = SetBlockType.from( session, args[ 0 ] );
             } catch ( final BlockNotFoundException e ) {
                 player.sendMessage( e.getMessage() );
                 return;

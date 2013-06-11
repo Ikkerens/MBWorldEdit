@@ -25,9 +25,11 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
+        final Session session = this.getSession( player );
+
         SetBlockType type;
         try {
-            type = new SetBlockType( args[ 0 ] );
+            type = SetBlockType.from( session, args[ 0 ] );
         } catch ( final BlockNotFoundException e ) {
             player.sendMessage( e.getMessage() );
             return;
@@ -41,7 +43,6 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Session session = this.getSession( player );
         final Selection sel = session.getSelection();
 
         final Location center = sel.getPosition1() != null ? sel.getPosition1() : ( sel.getPosition2() != null ? sel.getPosition2() : null );

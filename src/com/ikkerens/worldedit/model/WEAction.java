@@ -48,7 +48,7 @@ public class WEAction {
     }
 
     public void setBlock( final int x, final int y, final int z, final SetBlockType type ) throws BlockLimitException {
-        this.setBlock( x, y, z, type.getNextBlock() );
+        this.setBlock( x, y, z, type.getNextBlock( x, y, z ) );
     }
 
     public void undo() {
