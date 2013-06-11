@@ -2,6 +2,7 @@ package com.ikkerens.worldedit;
 
 import com.ikkerens.worldedit.commands.CopyCommand;
 import com.ikkerens.worldedit.commands.CountCommand;
+import com.ikkerens.worldedit.commands.CylinderCommand;
 import com.ikkerens.worldedit.commands.ExpandCommand;
 import com.ikkerens.worldedit.commands.InOutSetCommand;
 import com.ikkerens.worldedit.commands.LimitCommand;
@@ -50,6 +51,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         pm.registerCommand( "/outline", new String[] { "/walls" }, new OutlineCommand( this ) );
         pm.registerCommand( "/sphere", new String[] { "/hsphere" }, new SphereCommand( this ) );
         pm.registerCommand( "/pyramid", new String[] { "/hpyramid" }, new PyramidCommand( this ) );
+        pm.registerCommand( "/cylinder", new String[] { "/hcylinder" }, new CylinderCommand( this ) );
         pm.registerCommand( "/undo", new UndoCommand( this ) );
 
         // Selection
