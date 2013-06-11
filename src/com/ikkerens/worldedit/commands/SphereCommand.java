@@ -6,8 +6,8 @@ import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
-import com.ikkerens.worldedit.model.SetBlockType;
 import com.ikkerens.worldedit.model.WEAction;
+import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;

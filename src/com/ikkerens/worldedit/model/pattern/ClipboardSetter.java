@@ -1,4 +1,6 @@
-package com.ikkerens.worldedit.model;
+package com.ikkerens.worldedit.model.pattern;
+
+import com.ikkerens.worldedit.model.Clipboard;
 
 class ClipboardSetter extends SetBlockType {
     private final short[][][] clipboard;

@@ -1,4 +1,4 @@
-package com.ikkerens.worldedit.model;
+package com.ikkerens.worldedit.model.pattern;
 
 import java.util.HashSet;
 

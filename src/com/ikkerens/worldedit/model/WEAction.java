@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.ikkerens.worldedit.exceptions.BlockLimitException;
+import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
 import com.mbserver.api.game.Chunk;
 import com.mbserver.api.game.World;

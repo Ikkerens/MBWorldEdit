@@ -3,8 +3,8 @@ package com.ikkerens.worldedit.commands;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
-import com.ikkerens.worldedit.model.MatchBlockType;
 import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.pattern.MatchBlockType;
 
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
