@@ -5,6 +5,7 @@ import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.wand.Direction;
 
+import com.mbserver.api.Constructors;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
@@ -28,8 +29,8 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                 lowest = sel.getMinimumPosition();
                 highest = sel.getMaximumPosition();
 
-                lowest.set( lowest.getX(), 0, lowest.getZ(), false );
-                highest.set( highest.getX(), 127, highest.getX(), false );
+                sel.setPositions( Constructors.newLocation( sel.getWorld(), lowest.getX(), 0, highest.getZ() ), Constructors.newLocation( sel.getWorld(), highest.getX(), 127, highest.getZ() ) );
+                sel.inform();
             } else {
                 int amount;
                 try {
@@ -54,13 +55,13 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     case UP:
                     case NORTH:
                     case EAST:
-                        dir.addToLocation( highest, amount );
+                        lowest = dir.addToLocation( highest, amount );
                         break;
 
                     case DOWN:
                     case SOUTH:
                     case WEST:
-                        dir.addToLocation( lowest, amount );
+                        highest = dir.addToLocation( lowest, amount );
                         break;
                 }
             }

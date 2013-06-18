@@ -19,6 +19,6 @@ public enum Direction {
     }
 
     public Location addToLocation( final Location location, final int amount ) {
-        return location.add( this.x * amount, this.y * amount, this.z * amount, false );
+        return location.add( this.x * amount, this.y * amount, this.z * amount );
     }
 }

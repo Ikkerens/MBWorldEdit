@@ -50,10 +50,7 @@ public class InOutSetCommand extends AbstractCommand< WorldEditPlugin > {
                 modY *= -1;
             }
 
-            lowest.add( -modX, -modY, -modX, false );
-            highest.add( modX, modY, modX, false );
-
-            sel.setPositions( lowest, highest );
+            sel.setPositions( lowest.add( -modX, -modY, -modX ), highest.add( modX, modY, modX ) );
             sel.inform();
         } else
             player.sendMessage( NEED_SELECTION );

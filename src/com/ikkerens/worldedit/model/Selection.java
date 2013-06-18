@@ -2,6 +2,7 @@ package com.ikkerens.worldedit.model;
 
 import com.mbserver.api.Constructors;
 import com.mbserver.api.game.Location;
+import com.mbserver.api.game.World;
 
 public class Selection {
     private final Session session;
@@ -55,6 +56,10 @@ public class Selection {
             count = 0;
 
         return count;
+    }
+
+    public World getWorld() {
+        return this.pos1.getWorld();
     }
 
     public Location getPosition1() {

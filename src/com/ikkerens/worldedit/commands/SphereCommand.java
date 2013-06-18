@@ -60,7 +60,7 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
         }
 
         final Selection cSel = new Selection( null );
-        cSel.setPositions( center, center.add( rX, rY, rZ, true ) );
+        cSel.setPositions( center, center.add( rX, rY, rZ ) );
 
         final long start = System.currentTimeMillis();
         final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );

@@ -52,7 +52,7 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
         }
 
         final Selection cSel = new Selection( null );
-        cSel.setPositions( center, center.add( height, height, height, true ) );
+        cSel.setPositions( center, center.add( height, height, height ) );
 
         final long start = System.currentTimeMillis();
         final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );

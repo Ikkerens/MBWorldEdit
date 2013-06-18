@@ -58,7 +58,7 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
         }
 
         final Selection cSel = new Selection( null );
-        cSel.setPositions( center, center.add( rX, height, rZ, true ) );
+        cSel.setPositions( center, center.add( rX, height, rZ ) );
 
         final long start = System.currentTimeMillis();
         final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
@@ -82,11 +82,11 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
             return;
         else if ( height < 0 ) {
             height = -height;
-            center = center.add( 0, -height, 0, true );
+            center = center.add( 0, -height, 0 );
         }
 
         if ( center.getBlockY() < 0 )
-            center.setY( 0 );
+            center = center.add( 0, -center.getY(), 0 );
         else if ( ( ( center.getBlockY() + height ) - 1 ) > 127 )
             height = 128 - center.getBlockY();
 
