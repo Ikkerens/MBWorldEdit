@@ -30,7 +30,7 @@ public class CopyCommand extends ActionCommand< WorldEditPlugin > {
             for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
                 for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
                     for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                        clp[ x - lowest.getBlockX() ][ y - lowest.getBlockY() ][ z - lowest.getBlockZ() ] = world.getBlockID( x, y, z );
+                        clp[ x - lowest.getBlockX() ][ y - lowest.getBlockY() ][ z - lowest.getBlockZ() ] = world.getFlaggedBlockID( x, y, z );
             final Location pLoc = player.getLocation();
             final int x = lowest.getBlockX() - pLoc.getBlockX();
             final int y = lowest.getBlockY() - pLoc.getBlockY();

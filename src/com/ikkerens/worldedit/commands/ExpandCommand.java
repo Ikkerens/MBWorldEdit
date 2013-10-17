@@ -55,13 +55,13 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     case UP:
                     case NORTH:
                     case EAST:
-                        lowest = dir.addToLocation( highest, amount );
+                        highest = dir.addToLocation( highest, amount );
                         break;
 
                     case DOWN:
                     case SOUTH:
                     case WEST:
-                        highest = dir.addToLocation( lowest, amount );
+                        lowest = dir.addToLocation( lowest, amount );
                         break;
                 }
             }

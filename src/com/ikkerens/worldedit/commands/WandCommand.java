@@ -16,6 +16,7 @@ public class WandCommand extends AbstractCommand< WorldEditPlugin > {
     protected void execute( final String label, final Player player, final String[] args ) {
         player.giveItem( Wand.LEFT.getId(), 1, false );
         player.giveItem( Wand.RIGHT.getId(), 1, true );
+        player.sendMessage( "You have been given the 2 wand blocks." );
     }
 
 }

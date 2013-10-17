@@ -7,16 +7,16 @@ import com.mbserver.api.dynamic.BlockType;
 import com.mbserver.api.exceptions.BlockTypeAlreadyRegisteredException;
 
 public class Wand {
-    public static final Wand LEFT  = new Wand( 150, 14, 0 );
-    public static final Wand RIGHT = new Wand( 151, 14, 1 );
+    public static final Wand LEFT  = new Wand( "Wand Pos 1", "paint6" );
+    public static final Wand RIGHT = new Wand( "Wand Pos 2", "paint7" );
 
     private final BlockType  type;
 
-    public Wand( final int id, final int x, final int y ) {
-        this.type = Constructors.newBlockType( id );
+    public Wand( String name, String texture ) {
+        this.type = Constructors.newBlockType( 150 );
+        this.type.setName( name );
 
-        this.type.addTexture( BlockFace.DEFAULT, x, y );
-        // this.type.setCreative( false );
+        this.type.addTexture( BlockFace.DEFAULT, texture );
     }
 
     public void register( final BlockManager mgr ) {
