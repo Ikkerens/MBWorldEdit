@@ -101,12 +101,12 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
         final int ceilRadiusZ = (int) Math.ceil( radiusZ );
 
         double nextXn = 0;
-        forX: for ( int x = 0; x <= ceilRadiusX; ++x ) {
+        forX : for ( int x = 0; x <= ceilRadiusX; ++x ) {
             final double xn = nextXn;
             nextXn = ( x + 1 ) * invRadiusX;
 
             double nextZn = 0;
-            forZ: for ( int z = 0; z <= ceilRadiusZ; ++z ) {
+            forZ : for ( int z = 0; z <= ceilRadiusZ; ++z ) {
                 final double zn = nextZn;
                 nextZn = ( z + 1 ) * invRadiusZ;
 

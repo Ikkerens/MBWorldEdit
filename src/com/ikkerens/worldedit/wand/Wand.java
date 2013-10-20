@@ -12,7 +12,7 @@ public class Wand {
 
     private final BlockType  type;
 
-    public Wand( String name, String texture ) {
+    public Wand( final String name, final String texture ) {
         this.type = Constructors.newBlockType( 150 );
         this.type.setName( name );
 

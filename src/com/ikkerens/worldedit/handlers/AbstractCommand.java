@@ -19,6 +19,7 @@ public abstract class AbstractCommand< P extends MBServerPlugin > extends Abstra
             permissionName = plugin.getClass().getAnnotation( Manifest.class ).name().toLowerCase().replaceFirst( "mb", "" );
     }
 
+    @Override
     public void execute( final String command, final CommandSender sender, final String[] args, final String label ) {
         if ( !( sender instanceof Player ) ) {
             sender.sendMessage( "WorldEdit can only be used by players." );

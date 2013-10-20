@@ -94,17 +94,17 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
         final int ceilRZ = (int) Math.ceil( rZ );
 
         double nextX = 0;
-        forX: for ( int ix = 0; ix <= ceilRX; ix++ ) {
+        forX : for ( int ix = 0; ix <= ceilRX; ix++ ) {
             final double ax = nextX;
             nextX = ( ix + 1 ) * invertedRX;
 
             double nextY = 0;
-            forY: for ( int iy = 0; iy <= ceilRY; iy++ ) {
+            forY : for ( int iy = 0; iy <= ceilRY; iy++ ) {
                 final double ay = nextY;
                 nextY = ( iy + 1 ) * invertedRY;
 
                 double nextZ = 0;
-                forZ: for ( int iz = 0; iz <= ceilRZ; iz++ ) {
+                forZ : for ( int iz = 0; iz <= ceilRZ; iz++ ) {
                     final double az = nextZ;
                     nextZ = ( iz + 1 ) * invertedRZ;
 

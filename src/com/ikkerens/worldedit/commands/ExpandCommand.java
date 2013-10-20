@@ -51,7 +51,7 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                 lowest = sel.getMinimumPosition();
                 highest = sel.getMaximumPosition();
 
-                switch( dir ) {
+                switch ( dir ) {
                     case UP:
                     case NORTH:
                     case EAST:
