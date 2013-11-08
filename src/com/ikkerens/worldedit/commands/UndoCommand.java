@@ -16,7 +16,7 @@ public class UndoCommand extends ActionCommand< WorldEditPlugin > {
         int repeat = 1;
         if ( args.length > 0 )
             try {
-                repeat = Integer.parseInt( args[ 1 ] );
+                repeat = Integer.parseInt( args[ 0 ] );
             } catch ( final NumberFormatException e ) {
                 player.sendMessage( String.format( "%s is not a valid number.", args[ 1 ] ) );
             }
