@@ -23,8 +23,13 @@ public class WandListener extends AbstractListener< WorldEditPlugin > {
         final short compare;
         if ( e instanceof BlockBreakEvent )
             compare = e.getPlayer().getHandItem();
-        else
+        else {
             compare = e.getBlock().getBlockID();
+            try {
+                Thread.sleep( 100 );
+            } catch ( InterruptedException e1 ) {
+            }
+        }
 
         final Location originLoc = player.getMetaData( CopyCommand.COPY_LOCATION_KEY, null );
         if ( originLoc != null ) {
