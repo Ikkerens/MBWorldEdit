@@ -14,22 +14,20 @@ public class UndoCommand extends ActionCommand< WorldEditPlugin > {
     @Override
     protected void execute( final String label, final Player player, final String[] args ) {
         int repeat = 1;
-        if ( args.length > 0 ) {
+        if ( args.length > 0 )
             try {
                 repeat = Integer.parseInt( args[ 1 ] );
-            } catch ( NumberFormatException e ) {
+            } catch ( final NumberFormatException e ) {
                 player.sendMessage( String.format( "%s is not a valid number.", args[ 1 ] ) );
             }
-        }
 
-        for ( int i = 0; i < repeat; i++ ) {
+        for ( int i = 0; i < repeat; i++ )
             if ( this.getSession( player ).undoLast() )
                 player.sendMessage( "Undone last action." );
             else {
                 player.sendMessage( "Action history is empty." );
                 break;
             }
-        }
     }
 
 }

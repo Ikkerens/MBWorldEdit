@@ -11,6 +11,7 @@ import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
 public class CopyCommand extends ActionCommand< WorldEditPlugin > {
+    public static final String COPY_LOCATION_KEY = "worldedit.copy.origin";
 
     public CopyCommand( final WorldEditPlugin plugin ) {
         super( plugin );
@@ -38,6 +39,9 @@ public class CopyCommand extends ActionCommand< WorldEditPlugin > {
 
             final Clipboard clipboard = new Clipboard( x, y, z, clp );
             session.setClipboard( clipboard );
+
+            if ( ( args.length > 0 ) && args[ 0 ].equalsIgnoreCase( "-o" ) )
+                player.setMetaData( COPY_LOCATION_KEY, lowest );
 
             player.sendMessage( "Blocks copied" );
         } else

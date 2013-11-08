@@ -25,6 +25,12 @@ public class Wand {
         } catch ( final BlockTypeAlreadyRegisteredException e ) {
             e.fixIt();
         }
+
+        // Register block break times
+        for ( int i = 0; i < 256; i++ ) {
+            final BlockType type = mgr.getBlockType( i );
+            type.addBlockDrop( this.type.getID(), 250, 0 );
+        }
     }
 
     public short getId() {

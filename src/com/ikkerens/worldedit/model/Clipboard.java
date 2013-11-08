@@ -10,8 +10,8 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 public class Clipboard {
-    // Relative towards player
-    private final int         rX, rY, rZ;
+    // Relative towards origin
+    private int               rX, rY, rZ;
     private final short[][][] blocks;
 
     public Clipboard( final int rX, final int rY, final int rZ, final short[][][] blocks ) {
@@ -71,6 +71,12 @@ public class Clipboard {
         }
 
         return null;
+    }
+
+    public void setRelative( final int rX, final int rY, final int rZ ) {
+        this.rX = rX;
+        this.rY = rY;
+        this.rZ = rZ;
     }
 
     public int getRelativeX() {

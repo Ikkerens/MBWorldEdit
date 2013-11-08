@@ -6,7 +6,8 @@ import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.game.Player;
 
 public class AbstractHandler< P extends MBServerPlugin > {
-    private final P plugin;
+    private static final String SESSION_KEY = "worldedit.session";
+    private final P             plugin;
 
     public AbstractHandler( final P plugin ) {
         this.plugin = plugin;
@@ -17,10 +18,10 @@ public class AbstractHandler< P extends MBServerPlugin > {
     }
 
     protected final Session getSession( final Player player ) {
-        Session session = player.getMetaData( "worldedit.session", null );
+        Session session = player.getMetaData( SESSION_KEY, null );
         if ( session == null ) {
             session = new Session( this.plugin, player );
-            player.setMetaData( "worldedit.session", session );
+            player.setMetaData( SESSION_KEY, session );
         }
 
         return session;
