@@ -10,7 +10,6 @@ import com.ikkerens.worldedit.model.WEAction;
 import com.ikkerens.worldedit.model.pattern.MatchBlockType;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
-import com.mbserver.api.dynamic.BlockRotatability;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Material;
 import com.mbserver.api.game.Player;
@@ -43,8 +42,8 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
             SetBlockType type;
             MatchBlockType matcher;
             try {
-                type = SetBlockType.from( session, args[ ++it ] );
                 matcher = new MatchBlockType( args[ ++it ] );
+                type = SetBlockType.from( session, args[ ++it ] );
             } catch ( final BlockNotFoundException e ) {
                 player.sendMessage( e.getMessage() );
                 return;
@@ -58,17 +57,16 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
                     for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
                         for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
                             final short matchBlock = world.getFlaggedBlockID( x, y, z );
-                            if ( args.length == 2 ) {
-                                if ( matcher.matches( (short) ( matchBlock & 0x00FF ) ) )
-                                    wea.setBlock( x, y, z, type );
-                            } else {
-                                short nextBlock = type.getNextBlock( x, y, z );
 
-                                if ( ( Material.getMaterialByID( matchBlock & 0x00FF ).getRotatability() != BlockRotatability.FALSE ) && ( Material.getMaterialByID( nextBlock ).getRotatability() != BlockRotatability.FALSE ) )
-                                    nextBlock = (short) ( nextBlock | ( matchBlock & 0xFF00 ) );
+                            if ( !matcher.matches( (short) ( matchBlock & 0x00FF ) ) )
+                                continue;
 
-                                wea.setBlock( x, y, z, nextBlock );
-                            }
+                            short nextBlock = type.getNextBlock( x, y, z );
+
+                            if ( ( args.length == 3 ) && ( Material.getMaterialByID( matchBlock & 0x00FF ).getRotatability() == Material.getMaterialByID( nextBlock ).getRotatability() ) )
+                                nextBlock = (short) ( nextBlock | ( matchBlock & 0xFF00 ) );
+
+                            wea.setBlock( x, y, z, nextBlock );
                         }
                 wea.finish();
             } catch ( final BlockLimitException e ) {

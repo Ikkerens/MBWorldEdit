@@ -31,7 +31,7 @@ public class WEAction {
     }
 
     public void setBlock( final int x, final int y, final int z, final short blockID ) throws BlockLimitException {
-        final short current = this.world.getBlockID( x, y, z );
+        final short current = this.world.getFlaggedBlockID( x, y, z );
 
         if ( current != blockID ) {
             if ( ( this.limit != -1 ) && ( this.affected >= this.limit ) )
