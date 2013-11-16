@@ -24,7 +24,7 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
 
     @Override
     protected void execute( final String label, final Player player, final String[] args ) {
-        if ( ( args.length != 2 && args.length != 3 ) || ( args.length == 3 && !args[ 0 ].equals( "-r" ) ) ) {
+        if ( ( ( args.length != 2 ) && ( args.length != 3 ) ) || ( ( args.length == 3 ) && !args[ 0 ].equals( "-r" ) ) ) {
             player.sendMessage( "Usage: /" + label + " [-r] <match> <replacement>" );
             return;
         }
@@ -64,9 +64,8 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
                             } else {
                                 short nextBlock = type.getNextBlock( x, y, z );
 
-                                if ( Material.getMaterialByID( matchBlock & 0x00FF ).getRotatability() != BlockRotatability.FALSE && Material.getMaterialByID( nextBlock ).getRotatability() != BlockRotatability.FALSE ) {
+                                if ( ( Material.getMaterialByID( matchBlock & 0x00FF ).getRotatability() != BlockRotatability.FALSE ) && ( Material.getMaterialByID( nextBlock ).getRotatability() != BlockRotatability.FALSE ) )
                                     nextBlock = (short) ( nextBlock | ( matchBlock & 0xFF00 ) );
-                                }
 
                                 wea.setBlock( x, y, z, nextBlock );
                             }

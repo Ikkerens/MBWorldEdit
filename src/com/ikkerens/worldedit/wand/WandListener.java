@@ -27,7 +27,7 @@ public class WandListener extends AbstractListener< WorldEditPlugin > {
             compare = e.getBlock().getBlockID();
             try {
                 Thread.sleep( 100 );
-            } catch ( InterruptedException e1 ) {
+            } catch ( final InterruptedException e1 ) {
             }
         }
 
