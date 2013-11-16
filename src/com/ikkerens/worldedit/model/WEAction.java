@@ -56,7 +56,9 @@ public class WEAction {
         for ( final SimpleEntry< Integer[], Short > entry : this.undoList ) {
             final Integer[] keys = entry.getKey();
             this.world.setBlockWithoutUpdate( keys[ 0 ], keys[ 1 ], keys[ 2 ], entry.getValue() );
+            this.chunks.add( this.world.getChunk( keys[ 0 ], keys[ 1 ], keys[ 2 ], true ) );
         }
+        this.finish();
     }
 
     public void finish() {
