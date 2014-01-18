@@ -1,5 +1,7 @@
 package com.ikkerens.worldedit;
 
+import com.ikkerens.worldedit.commands.BreakCommand;
+import com.ikkerens.worldedit.commands.ClearCommand;
 import com.ikkerens.worldedit.commands.CopyCommand;
 import com.ikkerens.worldedit.commands.CountCommand;
 import com.ikkerens.worldedit.commands.CylinderCommand;
@@ -47,6 +49,7 @@ public class WorldEditPlugin extends MBServerPlugin {
 
         // Actions
         pm.registerCommand( "/set", new SetCommand( this ) );
+        pm.registerCommand( "/break", new BreakCommand( this ) );
         pm.registerCommand( "/replace", new String[] { "/repl" }, new ReplaceCommand( this ) );
         pm.registerCommand( "/outline", new String[] { "/walls" }, new OutlineCommand( this ) );
         pm.registerCommand( "/sphere", new String[] { "/hsphere" }, new SphereCommand( this ) );
@@ -59,6 +62,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         pm.registerCommand( "/shift", new ShiftCommand( this ) );
         pm.registerCommand( "/expand", new ExpandCommand( this ) );
         pm.registerCommand( "/inset", new String[] { "/outset" }, new InOutSetCommand( this ) );
+        pm.registerCommand( "/clear", new ClearCommand( this ) );
 
         // Clipboard
         pm.registerCommand( "/copy", new String[] { "/cp" }, new CopyCommand( this ) );

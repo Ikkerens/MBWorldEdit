@@ -10,8 +10,8 @@ import com.ikkerens.worldedit.model.WEAction;
 import com.ikkerens.worldedit.model.pattern.MatchBlockType;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
+import com.mbserver.api.dynamic.BlockManager;
 import com.mbserver.api.game.Location;
-import com.mbserver.api.game.Material;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
@@ -53,6 +53,7 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
             final WEAction wea = session.newAction( world, sel.getCount() );
 
             try {
+                final BlockManager mgr = this.getPlugin().getServer().getBlockManager();
                 for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
                     for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
                         for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
@@ -63,7 +64,7 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
 
                             short nextBlock = type.getNextBlock( x, y, z );
 
-                            if ( ( args.length == 3 ) && ( Material.getMaterialByID( matchBlock & 0x00FF ).getRotatability() == Material.getMaterialByID( nextBlock ).getRotatability() ) )
+                            if ( ( args.length == 3 ) && ( mgr.getBlockType( matchBlock & 0x00FF ).getRotatability() == mgr.getBlockType( nextBlock ).getRotatability() ) )
                                 nextBlock = (short) ( nextBlock | ( matchBlock & 0xFF00 ) );
 
                             wea.setBlock( x, y, z, nextBlock );

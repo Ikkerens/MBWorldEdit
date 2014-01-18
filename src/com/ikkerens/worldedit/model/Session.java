@@ -10,7 +10,7 @@ import com.mbserver.api.game.World;
 
 public class Session {
     private final Player                 player;
-    private final Selection              selection;
+    private Selection                    selection;
     private Clipboard                    clipboard;
     private final LinkedList< WEAction > history;
 
@@ -39,6 +39,10 @@ public class Session {
 
     public Selection getSelection() {
         return this.selection;
+    }
+
+    public void clearSelection() {
+        this.selection = new Selection( this );
     }
 
     public Clipboard getClipboard() {

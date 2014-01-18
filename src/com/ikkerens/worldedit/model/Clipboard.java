@@ -61,12 +61,15 @@ public class Clipboard {
 
             return new Clipboard( rX, rY, rZ, clp );
         } catch ( final IOException e ) {
+            e.printStackTrace();
         } catch ( final DataFormatException e ) {
+            e.printStackTrace();
         } finally {
             if ( file != null )
                 try {
                     file.close();
                 } catch ( final IOException e ) {
+                    e.printStackTrace();
                 }
         }
 

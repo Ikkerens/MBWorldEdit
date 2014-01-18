@@ -87,7 +87,7 @@ public class Selection {
         this.session.getPlayer().sendMessage( String.format( "Selection: %s to %s (Count: %s)", pos1text, pos2text, this.getCount() ) );
 
         // Build lines
-        this.session.getPlayer().clearLines();
+        this.session.getPlayer().clearLines( false );
         if ( this.isValid() ) {
             final Location pos1 = this.getMinimumPosition();
             final Location pos2 = this.getMaximumPosition().add( 1, 1, 1 );

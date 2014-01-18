@@ -52,6 +52,21 @@ public class WEAction {
         this.setBlock( x, y, z, type.getNextBlock( x, y, z ) );
     }
 
+    public void destroy( final int x, final int y, final int z, final short tool ) throws BlockLimitException {
+        if ( ( this.limit != -1 ) && ( this.affected >= this.limit ) )
+            throw new BlockLimitException();
+
+        if ( this.recordAction )
+            this.undoList.add( new SimpleEntry< Integer[], Short >( new Integer[] { x, y, z }, this.world.getFlaggedBlockID( x, y, z ) ) );
+
+        if ( tool == 0 )
+            this.world.destroyNaturally( x, y, z );
+        else
+            this.world.destroyWithTool( tool, x, y, z );
+
+        this.affected++;
+    }
+
     public void undo() {
         for ( final SimpleEntry< Integer[], Short > entry : this.undoList ) {
             final Integer[] keys = entry.getKey();
