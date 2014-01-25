@@ -31,7 +31,7 @@ public class WandListener extends AbstractListener< WorldEditPlugin > {
             }
         }
 
-        if ( compare == Wand.LEFT.getId() || compare == Wand.RIGHT.getId() ) {
+        if ( ( compare == Wand.LEFT.getId() ) || ( compare == Wand.RIGHT.getId() ) ) {
             final Location originLoc = player.getMetaData( CopyCommand.COPY_LOCATION_KEY, null );
             if ( originLoc != null ) {
                 final Location tLoc = e.getLocation();

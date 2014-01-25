@@ -40,10 +40,11 @@ public class CopyCommand extends ActionCommand< WorldEditPlugin > {
             final Clipboard clipboard = new Clipboard( x, y, z, clp );
             session.setClipboard( clipboard );
 
-            if ( ( args.length > 0 ) && args[ 0 ].equalsIgnoreCase( "-o" ) )
+            if ( ( args.length > 0 ) && args[ 0 ].equalsIgnoreCase( "-o" ) ) {
                 player.setMetaData( COPY_LOCATION_KEY, lowest );
-
-            player.sendMessage( "Blocks copied" );
+                player.sendMessage( "Blocks copied. You can now specify a location to use as origin using your wand." );
+            } else
+                player.sendMessage( "Blocks copied" );
         } else
             player.sendMessage( NEED_SELECTION );
 
