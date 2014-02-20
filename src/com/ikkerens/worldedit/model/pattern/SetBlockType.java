@@ -8,7 +8,7 @@ public abstract class SetBlockType extends Parser {
     public static SetBlockType from( final Session session, final String arg ) throws BlockNotFoundException {
         if ( arg.equalsIgnoreCase( "#clipboard" ) )
             if ( session.getClipboard() != null )
-                return new ClipboardSetter( session.getClipboard() );
+                return new ClipboardSetter( session );
             else
                 throw new BlockNotFoundException( "Your clipboard is empty!" );
         else if ( arg.contains( "," ) )
