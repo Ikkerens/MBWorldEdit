@@ -1,4 +1,4 @@
-package com.ikkerens.worldedit.wand;
+package com.ikkerens.worldedit.model.wand;
 
 import com.mbserver.api.game.Location;
 

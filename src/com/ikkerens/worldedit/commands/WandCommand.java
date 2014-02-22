@@ -2,7 +2,7 @@ package com.ikkerens.worldedit.commands;
 
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
-import com.ikkerens.worldedit.wand.Wand;
+import com.ikkerens.worldedit.model.wand.Wand;
 
 import com.mbserver.api.Constructors;
 import com.mbserver.api.game.GameMode;

@@ -20,8 +20,8 @@ import com.ikkerens.worldedit.commands.ShiftCommand;
 import com.ikkerens.worldedit.commands.SphereCommand;
 import com.ikkerens.worldedit.commands.UndoCommand;
 import com.ikkerens.worldedit.commands.WandCommand;
-import com.ikkerens.worldedit.wand.Wand;
-import com.ikkerens.worldedit.wand.WandListener;
+import com.ikkerens.worldedit.model.wand.Wand;
+import com.ikkerens.worldedit.model.wand.WandListener;
 
 import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.Manifest;
