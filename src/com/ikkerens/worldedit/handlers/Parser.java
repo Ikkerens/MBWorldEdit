@@ -9,15 +9,26 @@ public abstract class Parser {
         try {
             return Short.parseShort( arg );
         } catch ( final NumberFormatException e ) {
-            try {
-                final Material m = Material.valueOf( arg.toUpperCase() );
-                if ( m.getBlockType() == null )
-                    throw new BlockNotFoundException( String.format( "%s is not a block.", arg ) );
-                return m.getID();
-            } catch ( final IllegalArgumentException ignored ) {
-            }
-        }
+            Material found = null;
+            final String upperName = arg.toUpperCase();
+            int delta = Integer.MAX_VALUE;
 
-        throw new BlockNotFoundException( String.format( "Block %s not found.", arg ) );
+            for ( final Material material : Material.values() )
+                if ( material.name().startsWith( upperName ) ) {
+                    final int curDelta = material.name().length() - upperName.length();
+                    if ( curDelta < delta ) {
+                        found = material;
+                        delta = curDelta;
+                    }
+
+                    if ( curDelta == 0 )
+                        break;
+                }
+
+            if ( found == null )
+                throw new BlockNotFoundException( String.format( "%s is not a block.", arg ) );
+
+            return found.getID();
+        }
     }
 }
