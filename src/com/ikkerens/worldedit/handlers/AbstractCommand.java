@@ -26,7 +26,7 @@ public abstract class AbstractCommand< P extends MBServerPlugin > extends Abstra
             return;
         }
 
-        if ( !sender.hasPermission( String.format( "ikkerens.%s.%s", permissionName, command.replaceFirst( "/", "" ) ) ) && !sender.hasPermission( "ikkerens.worldedit.*" ) ) {
+        if ( !sender.hasPermission( String.format( "ikkerens.%s.%s", permissionName, command.replaceFirst( "/", "" ) ) ) && !sender.hasPermission( String.format( "ikkerens.%s.*", permissionName ) ) ) {
             sender.sendMessage( "You do not have permission to use /" + label );
             return;
         }
