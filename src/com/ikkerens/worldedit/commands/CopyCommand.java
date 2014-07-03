@@ -2,11 +2,11 @@ package com.ikkerens.worldedit.commands;
 
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.ActionCommand;
-import com.ikkerens.worldedit.model.Clipboard;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 
 import com.mbserver.api.game.Location;
+import com.mbserver.api.game.MBSchematic;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
@@ -37,7 +37,7 @@ public class CopyCommand extends ActionCommand< WorldEditPlugin > {
             final int y = lowest.getBlockY() - pLoc.getBlockY();
             final int z = lowest.getBlockZ() - pLoc.getBlockZ();
 
-            final Clipboard clipboard = new Clipboard( x, y, z, clp );
+            final MBSchematic clipboard = new MBSchematic( x, y, z, clp );
             session.setClipboard( clipboard );
 
             if ( ( args.length > 0 ) && args[ 0 ].equalsIgnoreCase( "-o" ) ) {

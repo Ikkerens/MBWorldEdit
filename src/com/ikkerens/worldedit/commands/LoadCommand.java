@@ -1,9 +1,11 @@
 package com.ikkerens.worldedit.commands;
 
+import java.io.IOException;
+
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.ActionCommand;
-import com.ikkerens.worldedit.model.Clipboard;
 
+import com.mbserver.api.game.MBSchematic;
 import com.mbserver.api.game.Player;
 
 public class LoadCommand extends ActionCommand< WorldEditPlugin > {
@@ -19,13 +21,13 @@ public class LoadCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Clipboard clb = Clipboard.loadFromFile( args[ 0 ] );
-
-        if ( clb != null ) {
+        try {
+            final MBSchematic clb = MBSchematic.loadFromFile( String.format( "plugins/MBWorldEdit/%s.mbschem", args[ 0 ] ) );
             this.getSession( player ).setClipboard( clb );
             player.sendMessage( "Clipboard loaded." );
-        } else
+        } catch ( final IOException e ) {
             player.sendMessage( "Loading clipboard failed!" );
+        }
     }
 
 }

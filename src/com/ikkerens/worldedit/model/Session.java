@@ -5,13 +5,14 @@ import java.util.LinkedList;
 import com.ikkerens.worldedit.Config;
 
 import com.mbserver.api.MBServerPlugin;
+import com.mbserver.api.game.MBSchematic;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
 
 public class Session {
     private final Player                 player;
     private Selection                    selection;
-    private Clipboard                    clipboard;
+    private MBSchematic                  clipboard;
     private final LinkedList< WEAction > history;
 
     private final int                    undoTreshold;
@@ -45,11 +46,11 @@ public class Session {
         this.selection = new Selection( this );
     }
 
-    public Clipboard getClipboard() {
+    public MBSchematic getClipboard() {
         return this.clipboard;
     }
 
-    public void setClipboard( final Clipboard clipboard ) {
+    public void setClipboard( final MBSchematic clipboard ) {
         this.clipboard = clipboard;
     }
 
