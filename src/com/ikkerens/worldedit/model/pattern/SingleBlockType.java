@@ -14,4 +14,9 @@ public class SingleBlockType extends SetBlockType {
         return this.block;
     }
 
+    @Override
+    public short[] getBlockIDs() {
+        return new short[] { this.block };
+    }
+
 }

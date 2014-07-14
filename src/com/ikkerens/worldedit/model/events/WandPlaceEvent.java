@@ -1,25 +1,19 @@
 package com.ikkerens.worldedit.model.events;
 
-import com.mbserver.api.events.CancellableEvent;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
-public class WandPlaceEvent extends CancellableEvent {
-    private final Player   player;
+public class WandPlaceEvent extends WorldEditEvent {
     private final Location location;
     private final boolean  pos1;
 
     private boolean        revertBlock;
 
     public WandPlaceEvent( final Player player, final Location location, final boolean pos1 ) {
-        this.player = player;
+        super( player );
         this.location = location;
         this.pos1 = pos1;
         this.revertBlock = true;
-    }
-
-    public Player getPlayer() {
-        return this.player;
     }
 
     public Location getLocation() {

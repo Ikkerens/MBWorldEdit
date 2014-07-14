@@ -4,6 +4,7 @@ import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.events.SelectionCommandEvent;
 import com.ikkerens.worldedit.model.pattern.MatchBlockType;
 
 import com.mbserver.api.game.Location;
@@ -23,7 +24,7 @@ public class CountCommand extends AbstractCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection sel = this.getSession( player ).getSelection();
+        final Selection sel = this.getPlugin().getSession( player ).getSelection();
         if ( sel.isValid() ) {
             final Location lowest = sel.getMinimumPosition();
             final Location highest = sel.getMaximumPosition();
@@ -37,17 +38,34 @@ public class CountCommand extends AbstractCommand< WorldEditPlugin > {
                 return;
             }
 
-            int result = 0;
+            final CountCommandEvent event = new CountCommandEvent( player, match );
+            this.getPlugin().getPluginManager().triggerEvent( event );
 
-            for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
-                for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                    for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
-                        if ( match.matches( world.getBlockID( x, y, z ) ) )
-                            result++;
+            if ( !event.isCancelled() ) {
+                int result = 0;
 
-            player.sendMessage( String.format( "Counted blocks: %s", result ) );
+                for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                    for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
+                        for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ )
+                            if ( match.matches( world.getBlockID( x, y, z ) ) )
+                                result++;
+
+                player.sendMessage( String.format( "Counted blocks: %s", result ) );
+            }
         } else
             player.sendMessage( NEED_SELECTION );
     }
 
+    public static class CountCommandEvent extends SelectionCommandEvent {
+        private final MatchBlockType type;
+
+        public CountCommandEvent( final Player player, final MatchBlockType type ) {
+            super( player );
+            this.type = type;
+        }
+
+        public MatchBlockType getBlockType() {
+            return this.type;
+        }
+    }
 }

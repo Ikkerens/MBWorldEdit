@@ -3,6 +3,7 @@ package com.ikkerens.worldedit.commands;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.events.SelectionCommandEvent;
 
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
@@ -37,23 +38,45 @@ public class InOutSetCommand extends AbstractCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection sel = this.getSession( player ).getSelection();
+        final Selection sel = this.getPlugin().getSession( player ).getSelection();
         if ( sel.isValid() ) {
-            final Location lowest = sel.getMinimumPosition();
-            final Location highest = sel.getMaximumPosition();
+            final InOutSetCommandEvent event = new InOutSetCommandEvent( player, label.equalsIgnoreCase( "/inset" ) );
+            this.getPlugin().getPluginManager().triggerEvent( event );
+            if ( !event.isCancelled() ) {
+                final Location lowest = sel.getMinimumPosition();
+                final Location highest = sel.getMaximumPosition();
 
-            int modX = ( args.length == 1 ) || ( ( args.length == 2 ) && args[ 0 ].equalsIgnoreCase( "-h" ) ) ? amount : 0;
-            int modY = ( args.length == 1 ) || ( ( args.length == 2 ) && args[ 0 ].equalsIgnoreCase( "-v" ) ) ? amount : 0;
+                int modX = ( args.length == 1 ) || ( ( args.length == 2 ) && args[ 0 ].equalsIgnoreCase( "-h" ) ) ? amount : 0;
+                int modY = ( args.length == 1 ) || ( ( args.length == 2 ) && args[ 0 ].equalsIgnoreCase( "-v" ) ) ? amount : 0;
 
-            if ( label.equalsIgnoreCase( "/inset" ) ) {
-                modX *= -1;
-                modY *= -1;
+                if ( label.equalsIgnoreCase( "/inset" ) ) {
+                    modX *= -1;
+                    modY *= -1;
+                }
+
+                sel.setPositions( lowest.add( -modX, -modY, -modX ), highest.add( modX, modY, modX ) );
+                sel.inform();
             }
-
-            sel.setPositions( lowest.add( -modX, -modY, -modX ), highest.add( modX, modY, modX ) );
-            sel.inform();
         } else
             player.sendMessage( NEED_SELECTION );
+    }
+
+    public static class InOutSetCommandEvent extends SelectionCommandEvent {
+        private final boolean inset;
+
+        public InOutSetCommandEvent( final Player player, final boolean inset ) {
+            super( player );
+            this.inset = inset;
+        }
+
+        public boolean isInSet() {
+            return this.inset;
+        }
+
+        public boolean isOutSet() {
+            return !this.inset;
+        }
+
     }
 
 }

@@ -41,9 +41,9 @@ public class WandListener extends AbstractListener< WorldEditPlugin > {
 
             if ( !event.isCancelled() )
                 if ( left )
-                    this.getSession( player ).getSelection().setPosition1( location );
+                    this.getPlugin().getSession( player ).getSelection().setPosition1( location );
                 else
-                    this.getSession( player ).getSelection().setPosition2( location );
+                    this.getPlugin().getSession( player ).getSelection().setPosition2( location );
             if ( event.shouldRevertBlock() )
                 e.setCancelled( true );
         }
@@ -59,7 +59,7 @@ public class WandListener extends AbstractListener< WorldEditPlugin > {
             final int rX = originLoc.getBlockX() - tLoc.getBlockX();
             final int rY = originLoc.getBlockY() - tLoc.getBlockY();
             final int rZ = originLoc.getBlockZ() - tLoc.getBlockZ();
-            this.getSession( player ).getClipboard().setRelative( rX, rY, rZ );
+            this.getPlugin().getSession( player ).getClipboard().setRelative( rX, rY, rZ );
 
             player.removeMetaData( CopyCommand.COPY_LOCATION_KEY );
             player.sendMessage( String.format( "Clipboard origin updated to %s", String.format( "(%s,%s,%s)", tLoc.getBlockX(), tLoc.getBlockY(), tLoc.getBlockZ() ) ) );

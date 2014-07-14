@@ -1,5 +1,7 @@
 package com.ikkerens.worldedit.model.pattern;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -38,5 +40,18 @@ class RandomSetBlock extends SetBlockType {
     @Override
     public short getNextBlock( final int x, final int y, final int z ) {
         return this.validBlocks.floorEntry( this.random.nextFloat() * this.total ).getValue();
+    }
+
+    @Override
+    public short[] getBlockIDs() {
+        final Collection< Short > values = this.validBlocks.values();
+        final short[] returnVal = new short[ values.size() ];
+
+        int i = 0;
+        final Iterator< Short > it = values.iterator();
+        while ( it.hasNext() )
+            returnVal[ i++ ] = it.next();
+
+        return returnVal;
     }
 }

@@ -18,11 +18,16 @@ class ClipboardSetter extends SetBlockType {
 
     @Override
     public short getNextBlock( final int x, final int y, final int z ) {
-        final int xp = Math.abs( x - this.minimumPosition.getBlockX() ) % clbSize[0];
-        final int yp = Math.abs( y - this.minimumPosition.getBlockY() ) % clbSize[1];
-        final int zp = Math.abs( z - this.minimumPosition.getBlockZ() ) % clbSize[2];
+        final int xp = Math.abs( x - this.minimumPosition.getBlockX() ) % this.clbSize[ 0 ];
+        final int yp = Math.abs( y - this.minimumPosition.getBlockY() ) % this.clbSize[ 1 ];
+        final int zp = Math.abs( z - this.minimumPosition.getBlockZ() ) % this.clbSize[ 2 ];
 
         return this.clipboard.getBlock( xp, yp, zp );
+    }
+
+    @Override
+    public short[] getBlockIDs() {
+        return null;
     }
 
 }

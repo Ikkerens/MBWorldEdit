@@ -29,15 +29,15 @@ public class PasteCommand extends ActionCommand< WorldEditPlugin > {
             final int oZ = pLoc.getBlockZ() + clipboard.getRelativeZ();
             final int[] sizes = clipboard.getSizes();
 
-            final WEAction wea = session.newAction( world, sizes[0] * sizes[1] * sizes[2] );
+            final WEAction wea = session.newAction( world, sizes[ 0 ] * sizes[ 1 ] * sizes[ 2 ] );
             final boolean skipAir = ( args.length == 1 ) && args[ 0 ].equalsIgnoreCase( "-a" );
 
             final long start = System.currentTimeMillis();
 
             try {
-                for ( int x = 0; x < sizes[0]; x++ )
-                    for ( int y = 0; y < sizes[1]; y++ )
-                        for ( int z = 0; z < sizes[2]; z++ ) {
+                for ( int x = 0; x < sizes[ 0 ]; x++ )
+                    for ( int y = 0; y < sizes[ 1 ]; y++ )
+                        for ( int z = 0; z < sizes[ 2 ]; z++ ) {
                             final short block = clipboard.getBlock( x, y, z );
                             if ( !skipAir || ( block != 0 ) )
                                 wea.setBlock( x + oX, y + oY, z + oZ, block );

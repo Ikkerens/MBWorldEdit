@@ -7,6 +7,7 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.WEAction;
+import com.ikkerens.worldedit.model.events.SinglePointActionEvent;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
 import com.mbserver.api.game.Location;
@@ -25,7 +26,7 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Session session = this.getSession( player );
+        final Session session = this.getPlugin().getSession( player );
 
         SetBlockType type;
         try {
@@ -57,21 +58,26 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection cSel = new Selection( null );
-        cSel.setPositions( center, center.add( rX, height, rZ ) );
+        final CylinderActionEvent event = new CylinderActionEvent( player, type, center, height, rX, rZ, label.equalsIgnoreCase( "/cylinder" ) );
+        this.getPlugin().getPluginManager().triggerEvent( event );
 
-        final long start = System.currentTimeMillis();
-        final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+        if ( !event.isCancelled() ) {
+            final Selection cSel = new Selection( null );
+            cSel.setPositions( center, center.add( rX, height, rZ ) );
 
-        try {
-            this.generateCylinder( wea, center, type, height, rX, rZ, label.equalsIgnoreCase( "/cylinder" ) );
-            wea.finish();
-        } catch ( final BlockLimitException e ) {
-            player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
-            return;
+            final long start = System.currentTimeMillis();
+            final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+
+            try {
+                this.generateCylinder( wea, center, type, height, rX, rZ, label.equalsIgnoreCase( "/cylinder" ) );
+                wea.finish();
+            } catch ( final BlockLimitException e ) {
+                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                return;
+            }
+
+            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         }
-
-        player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
     }
 
     private void generateCylinder( final WEAction wea, Location center, final SetBlockType type, int height, double radiusX, double radiusZ, final boolean filled ) throws BlockLimitException {
@@ -133,5 +139,36 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
 
     private double distanceCalc( final double x, final double z ) {
         return ( x * x ) + ( z * z );
+    }
+
+    public static class CylinderActionEvent extends SinglePointActionEvent {
+        private final int     height;
+        private final double  radiusX, radiusZ;
+        private final boolean filled;
+
+        public CylinderActionEvent( final Player player, final SetBlockType type, final Location point, final int height, final double radiusX, final double radiusZ, final boolean filled ) {
+            super( player, type, point );
+            this.height = height;
+            this.radiusX = radiusX;
+            this.radiusZ = radiusZ;
+            this.filled = filled;
+        }
+
+        public int getHeight() {
+            return this.height;
+        }
+
+        public double getRadiusX() {
+            return this.radiusX;
+        }
+
+        public double getRadiusZ() {
+            return this.radiusZ;
+        }
+
+        public boolean isFilled() {
+            return this.filled;
+        }
+
     }
 }

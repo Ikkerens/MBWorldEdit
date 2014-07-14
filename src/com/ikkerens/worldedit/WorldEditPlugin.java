@@ -1,19 +1,25 @@
 package com.ikkerens.worldedit;
 
 import com.ikkerens.worldedit.commands.*;
+import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.wand.Wand;
 import com.ikkerens.worldedit.model.wand.WandListener;
 
 import com.mbserver.api.MBServerPlugin;
 import com.mbserver.api.Manifest;
 import com.mbserver.api.PluginManager;
+import com.mbserver.api.game.Player;
 
 @Manifest( name = "MBWorldEdit", authors = "Ikkerens", config = Config.class )
 public class WorldEditPlugin extends MBServerPlugin {
+    public static final String     SESSION_KEY = "worldedit.session";
+    private static WorldEditPlugin instance;
+
     @Override
     public void onEnable() {
+        instance = this;
+
         // Save config, for editing
-        this.getConfig();
         this.saveConfig();
 
         final PluginManager pm = this.getPluginManager();
@@ -50,5 +56,24 @@ public class WorldEditPlugin extends MBServerPlugin {
         pm.registerCommand( "/paste", new PasteCommand( this ) );
         pm.registerCommand( "/load", new LoadCommand( this ) );
         pm.registerCommand( "/save", new SaveCommand( this ) );
+    }
+
+    @Override
+    public void onDisable() {
+        instance = null;
+    }
+
+    public static WorldEditPlugin getInstance() {
+        return instance;
+    }
+
+    public final Session getSession( final Player player ) {
+        Session session = player.getMetaData( SESSION_KEY, null );
+        if ( session == null ) {
+            session = new Session( this, player );
+            player.setMetaData( SESSION_KEY, session );
+        }
+
+        return session;
     }
 }
