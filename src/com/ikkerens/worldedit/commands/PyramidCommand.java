@@ -7,6 +7,7 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.WEAction;
+import com.ikkerens.worldedit.model.events.SinglePointActionEvent;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
 import com.mbserver.api.game.Location;
@@ -25,7 +26,7 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Session session = this.getSession( player );
+        final Session session = this.getPlugin().getSession( player );
 
         SetBlockType type;
         try {
@@ -51,21 +52,26 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection cSel = new Selection( null );
-        cSel.setPositions( center, center.add( height, height, height ) );
+        final PyramidActionEvent event = new PyramidActionEvent( player, type, center, height, label.equalsIgnoreCase( "/pyramid" ) );
+        this.getPlugin().getPluginManager().triggerEvent( event );
 
-        final long start = System.currentTimeMillis();
-        final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+        if ( !event.isCancelled() ) {
+            final Selection cSel = new Selection( null );
+            cSel.setPositions( center, center.add( height, height, height ) );
 
-        try {
-            this.generatePyramid( wea, center, type, height, label.equalsIgnoreCase( "/pyramid" ) );
-            wea.finish();
-        } catch ( final BlockLimitException e ) {
-            player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
-            return;
+            final long start = System.currentTimeMillis();
+            final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+
+            try {
+                this.generatePyramid( wea, center, type, height, label.equalsIgnoreCase( "/pyramid" ) );
+                wea.finish();
+            } catch ( final BlockLimitException e ) {
+                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                return;
+            }
+
+            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         }
-
-        player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
     }
 
     private void generatePyramid( final WEAction wea, final Location center, final SetBlockType type, int size, final boolean filled ) throws BlockLimitException {
@@ -86,5 +92,25 @@ public class PyramidCommand extends ActionCommand< WorldEditPlugin > {
                         wea.setBlock( cX - x, cY + y, cZ - z, type );
                     }
         }
+    }
+
+    public static class PyramidActionEvent extends SinglePointActionEvent {
+        private final int     height;
+        private final boolean filled;
+
+        public PyramidActionEvent( final Player player, final SetBlockType type, final Location point, final int height, final boolean filled ) {
+            super( player, type, point );
+            this.height = height;
+            this.filled = filled;
+        }
+
+        public int getHeight() {
+            return this.height;
+        }
+
+        public boolean isFilled() {
+            return this.filled;
+        }
+
     }
 }

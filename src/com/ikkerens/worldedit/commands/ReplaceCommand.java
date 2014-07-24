@@ -7,6 +7,7 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.WEAction;
+import com.ikkerens.worldedit.model.events.CuboidActionEvent;
 import com.ikkerens.worldedit.model.pattern.MatchBlockType;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
@@ -32,7 +33,7 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
         if ( args.length == 3 )
             it++;
 
-        final Session session = this.getSession( player );
+        final Session session = this.getPlugin().getSession( player );
         final Selection sel = session.getSelection();
         if ( sel.isValid() ) {
             final Location lowest = sel.getMinimumPosition();
@@ -49,35 +50,52 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
                 return;
             }
 
-            final long start = System.currentTimeMillis();
-            final WEAction wea = session.newAction( world, sel.getCount() );
+            final ReplaceCommandEvent event = new ReplaceCommandEvent( player, matcher, type );
+            this.getPlugin().getPluginManager().triggerEvent( event );
 
-            try {
-                final BlockManager mgr = this.getPlugin().getServer().getBlockManager();
-                for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
-                    for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
-                        for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
-                            final short matchBlock = world.getFlaggedBlockID( x, y, z );
+            if ( !event.isCancelled() ) {
+                final long start = System.currentTimeMillis();
+                final WEAction wea = session.newAction( world, sel.getCount() );
 
-                            if ( !matcher.matches( (short) ( matchBlock & 0x00FF ) ) )
-                                continue;
+                try {
+                    final BlockManager mgr = this.getPlugin().getServer().getBlockManager();
+                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                        for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ )
+                            for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
+                                final short matchBlock = world.getFlaggedBlockID( x, y, z );
 
-                            short nextBlock = type.getNextBlock( x, y, z );
+                                if ( !matcher.matches( (short) ( matchBlock & 0x00FF ) ) )
+                                    continue;
 
-                            if ( ( args.length == 3 ) && ( mgr.getBlockType( matchBlock & 0x00FF ).getRotatability() == mgr.getBlockType( nextBlock ).getRotatability() ) )
-                                nextBlock = (short) ( nextBlock | ( matchBlock & 0xFF00 ) );
+                                short nextBlock = type.getNextBlock( x, y, z );
 
-                            wea.setBlock( x, y, z, nextBlock );
-                        }
-                wea.finish();
-            } catch ( final BlockLimitException e ) {
-                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
-                return;
+                                if ( ( args.length == 3 ) && ( mgr.getBlockType( matchBlock & 0x00FF ).getRotatability() == mgr.getBlockType( nextBlock ).getRotatability() ) )
+                                    nextBlock = (short) ( nextBlock | ( matchBlock & 0xFF00 ) );
+
+                                wea.setBlock( x, y, z, nextBlock );
+                            }
+                    wea.finish();
+                } catch ( final BlockLimitException e ) {
+                    player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                    return;
+                }
+
+                player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
             }
-
-            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         } else
             player.sendMessage( NEED_SELECTION );
     }
 
+    public static class ReplaceCommandEvent extends CuboidActionEvent {
+        private final MatchBlockType match;
+
+        public ReplaceCommandEvent( final Player player, final MatchBlockType match, final SetBlockType replacement ) {
+            super( player, replacement );
+            this.match = match;
+        }
+
+        public MatchBlockType getMatcher() {
+            return this.match;
+        }
+    }
 }

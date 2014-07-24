@@ -9,7 +9,7 @@ public class ClipboardActionEvent extends WorldEditEvent {
         super( player );
         this.filename = filename;
     }
-    
+
     public String getFilename() {
         return this.filename;
     }

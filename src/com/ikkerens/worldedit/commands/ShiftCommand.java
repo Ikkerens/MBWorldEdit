@@ -3,6 +3,7 @@ package com.ikkerens.worldedit.commands;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
+import com.ikkerens.worldedit.model.events.SelectionCommandEvent;
 import com.ikkerens.worldedit.model.wand.Direction;
 
 import com.mbserver.api.game.Location;
@@ -21,7 +22,7 @@ public class ShiftCommand extends AbstractCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection sel = this.getSession( player ).getSelection();
+        final Selection sel = this.getPlugin().getSession( player ).getSelection();
         if ( sel.isValid() ) {
             int amount;
             try {
@@ -39,13 +40,37 @@ public class ShiftCommand extends AbstractCommand< WorldEditPlugin > {
                 return;
             }
 
-            final Location lowest = sel.getMinimumPosition();
-            final Location highest = sel.getMaximumPosition();
+            final ShiftSelectionCommandEvent event = new ShiftSelectionCommandEvent( player, dir, amount );
+            this.getPlugin().getPluginManager().triggerEvent( event );
 
-            sel.setPositions( dir.addToLocation( lowest, amount ), dir.addToLocation( highest, amount ) );
-            sel.inform();
+            if ( !event.isCancelled() ) {
+                final Location lowest = sel.getMinimumPosition();
+                final Location highest = sel.getMaximumPosition();
+
+                sel.setPositions( dir.addToLocation( lowest, amount ), dir.addToLocation( highest, amount ) );
+                sel.inform();
+            }
         } else
             player.sendMessage( NEED_SELECTION );
+    }
+
+    public static class ShiftSelectionCommandEvent extends SelectionCommandEvent {
+        private final Direction direction;
+        private final int       amount;
+
+        public ShiftSelectionCommandEvent( final Player player, final Direction direction, final int amount ) {
+            super( player );
+            this.direction = direction;
+            this.amount = amount;
+        }
+
+        public Direction getDirection() {
+            return this.direction;
+        }
+
+        public int getAmount() {
+            return this.amount;
+        }
     }
 
 }

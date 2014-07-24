@@ -7,6 +7,7 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.WEAction;
+import com.ikkerens.worldedit.model.events.SinglePointActionEvent;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
 import com.mbserver.api.game.Location;
@@ -25,7 +26,7 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Session session = this.getSession( player );
+        final Session session = this.getPlugin().getSession( player );
 
         SetBlockType type;
         try {
@@ -59,21 +60,26 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection cSel = new Selection( null );
-        cSel.setPositions( center, center.add( rX, rY, rZ ) );
+        final SphereActionEvent event = new SphereActionEvent( player, type, center, rX, rY, rZ, label.equalsIgnoreCase( "/sphere" ) );
+        this.getPlugin().getPluginManager().triggerEvent( event );
 
-        final long start = System.currentTimeMillis();
-        final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+        if ( !event.isCancelled() ) {
+            final Selection cSel = new Selection( null );
+            cSel.setPositions( center, center.add( rX, rY, rZ ) );
 
-        try {
-            this.generateSphere( wea, center, type, rX, rY, rZ, label.equalsIgnoreCase( "/sphere" ) );
-            wea.finish();
-        } catch ( final BlockLimitException e ) {
-            player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
-            return;
+            final long start = System.currentTimeMillis();
+            final WEAction wea = session.newAction( center.getWorld(), cSel.getCount() );
+
+            try {
+                this.generateSphere( wea, center, type, rX, rY, rZ, label.equalsIgnoreCase( "/sphere" ) );
+                wea.finish();
+            } catch ( final BlockLimitException e ) {
+                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                return;
+            }
+
+            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
         }
-
-        player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
     }
 
     private void generateSphere( final WEAction wea, final Location center, final SetBlockType type, double rX, double rY, double rZ, final boolean filled ) throws BlockLimitException {
@@ -139,5 +145,36 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
 
     private double distanceCalc( final double x, final double y, final double z ) {
         return ( x * x ) + ( y * y ) + ( z * z );
+    }
+
+    public static class SphereActionEvent extends SinglePointActionEvent {
+        private final int     height;
+        private final double  radiusX, radiusZ;
+        private final boolean filled;
+
+        public SphereActionEvent( final Player player, final SetBlockType type, final Location point, final int height, final double radiusX, final double radiusZ, final boolean filled ) {
+            super( player, type, point );
+            this.height = height;
+            this.radiusX = radiusX;
+            this.radiusZ = radiusZ;
+            this.filled = filled;
+        }
+
+        public int getHeight() {
+            return this.height;
+        }
+
+        public double getRadiusX() {
+            return this.radiusX;
+        }
+
+        public double getRadiusZ() {
+            return this.radiusZ;
+        }
+
+        public boolean isFilled() {
+            return this.filled;
+        }
+
     }
 }

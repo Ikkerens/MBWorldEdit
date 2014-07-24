@@ -24,7 +24,7 @@ public class LoadCommand extends ActionCommand< WorldEditPlugin > {
 
         final ClipboardLoadEvent event = new ClipboardLoadEvent( player, args[ 0 ] );
         this.getPlugin().getPluginManager().triggerEvent( event );
-        if ( !event.isCancelled() ) {
+        if ( !event.isCancelled() )
             try {
                 final MBSchematic clb = MBSchematic.loadFromFile( String.format( "plugins/MBWorldEdit/%s.mbschem", args[ 0 ] ) );
                 this.getPlugin().getSession( player ).setClipboard( clb );
@@ -32,12 +32,11 @@ public class LoadCommand extends ActionCommand< WorldEditPlugin > {
             } catch ( final IOException e ) {
                 player.sendMessage( "Loading clipboard failed!" );
             }
-        }
     }
 
     public static class ClipboardLoadEvent extends ClipboardActionEvent {
 
-        public ClipboardLoadEvent( Player player, String filename ) {
+        public ClipboardLoadEvent( final Player player, final String filename ) {
             super( player, filename );
 
         }

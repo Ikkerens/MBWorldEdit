@@ -7,6 +7,7 @@ import com.ikkerens.worldedit.handlers.ActionCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.WEAction;
+import com.ikkerens.worldedit.model.events.CuboidActionEvent;
 import com.ikkerens.worldedit.model.pattern.SetBlockType;
 
 import com.mbserver.api.game.Location;
@@ -26,7 +27,7 @@ public class OutlineCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Session session = this.getSession( player );
+        final Session session = this.getPlugin().getSession( player );
         final Selection sel = session.getSelection();
         if ( sel.isValid() ) {
             final Location lowest = sel.getMinimumPosition();
@@ -41,37 +42,48 @@ public class OutlineCommand extends ActionCommand< WorldEditPlugin > {
                 return;
             }
 
-            final long start = System.currentTimeMillis();
-            final WEAction wea = session.newAction( world, sel.getCount() );
+            final OutlineActionEvent event = new OutlineActionEvent( player, type );
+            this.getPlugin().getPluginManager().triggerEvent( event );
 
-            try {
-                for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
-                    for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ ) {
-                        wea.setBlock( lowest.getBlockX(), y, z, type );
-                        wea.setBlock( highest.getBlockX(), y, z, type );
-                    }
+            if ( !event.isCancelled() ) {
+                final long start = System.currentTimeMillis();
+                final WEAction wea = session.newAction( world, sel.getCount() );
 
-                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ ) {
-                        wea.setBlock( x, y, lowest.getBlockZ(), type );
-                        wea.setBlock( x, y, highest.getBlockZ(), type );
-                    }
-                }
-
-                if ( label.equalsIgnoreCase( "/outline" ) )
-                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                try {
+                    for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
                         for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ ) {
-                            wea.setBlock( x, lowest.getBlockY(), z, type );
-                            wea.setBlock( x, highest.getBlockY(), z, type );
+                            wea.setBlock( lowest.getBlockX(), y, z, type );
+                            wea.setBlock( highest.getBlockX(), y, z, type );
                         }
 
-                wea.finish();
-            } catch ( final BlockLimitException e ) {
-                player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
-                return;
-            }
+                        for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ ) {
+                            wea.setBlock( x, y, lowest.getBlockZ(), type );
+                            wea.setBlock( x, y, highest.getBlockZ(), type );
+                        }
+                    }
 
-            player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                    if ( label.equalsIgnoreCase( "/outline" ) )
+                        for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x++ )
+                            for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z++ ) {
+                                wea.setBlock( x, lowest.getBlockY(), z, type );
+                                wea.setBlock( x, highest.getBlockY(), z, type );
+                            }
+
+                    wea.finish();
+                } catch ( final BlockLimitException e ) {
+                    player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+                    return;
+                }
+
+                player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
+            }
         } else
             player.sendMessage( NEED_SELECTION );
+    }
+
+    public static class OutlineActionEvent extends CuboidActionEvent {
+        public OutlineActionEvent( final Player player, final SetBlockType type ) {
+            super( player, type );
+        }
     }
 }
