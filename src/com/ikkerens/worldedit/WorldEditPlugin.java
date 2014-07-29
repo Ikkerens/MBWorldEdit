@@ -1,6 +1,25 @@
 package com.ikkerens.worldedit;
 
-import com.ikkerens.worldedit.commands.*;
+import com.ikkerens.worldedit.commands.BreakCommand;
+import com.ikkerens.worldedit.commands.ClearCommand;
+import com.ikkerens.worldedit.commands.CopyCommand;
+import com.ikkerens.worldedit.commands.CountCommand;
+import com.ikkerens.worldedit.commands.CylinderCommand;
+import com.ikkerens.worldedit.commands.ExpandCommand;
+import com.ikkerens.worldedit.commands.InOutSetCommand;
+import com.ikkerens.worldedit.commands.LimitCommand;
+import com.ikkerens.worldedit.commands.LoadCommand;
+import com.ikkerens.worldedit.commands.OutlineCommand;
+import com.ikkerens.worldedit.commands.PasteCommand;
+import com.ikkerens.worldedit.commands.PositionCommand;
+import com.ikkerens.worldedit.commands.PyramidCommand;
+import com.ikkerens.worldedit.commands.ReplaceCommand;
+import com.ikkerens.worldedit.commands.SaveCommand;
+import com.ikkerens.worldedit.commands.SetCommand;
+import com.ikkerens.worldedit.commands.ShiftCommand;
+import com.ikkerens.worldedit.commands.SphereCommand;
+import com.ikkerens.worldedit.commands.UndoCommand;
+import com.ikkerens.worldedit.commands.WandCommand;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.wand.Wand;
 import com.ikkerens.worldedit.model.wand.WandListener;
@@ -63,14 +82,10 @@ public class WorldEditPlugin extends MBServerPlugin {
         instance = null;
     }
 
-    public static WorldEditPlugin getInstance() {
-        return instance;
-    }
-
-    public final Session getSession( final Player player ) {
+    public static Session getSession( final Player player ) {
         Session session = player.getMetaData( SESSION_KEY, null );
         if ( session == null ) {
-            session = new Session( this, player );
+            session = new Session( instance, player );
             player.setMetaData( SESSION_KEY, session );
         }
 

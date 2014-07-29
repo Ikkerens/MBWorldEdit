@@ -15,7 +15,8 @@ public class PositionCommand extends AbstractCommand< WorldEditPlugin > {
 
     @Override
     protected void execute( final String label, final Player player, final String[] args ) {
-        final Selection sel = this.getPlugin().getSession( player ).getSelection();
+        this.getPlugin();
+        final Selection sel = WorldEditPlugin.getSession( player ).getSelection();
 
         final PositionCommandEvent event = new PositionCommandEvent( player, label.equalsIgnoreCase( "/pos1" ) );
         this.getPlugin().getPluginManager().triggerEvent( event );

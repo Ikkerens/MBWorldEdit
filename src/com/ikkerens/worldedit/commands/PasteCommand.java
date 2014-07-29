@@ -20,7 +20,8 @@ public class PasteCommand extends ActionCommand< WorldEditPlugin > {
 
     @Override
     protected void execute( final String label, final Player player, final String[] args ) {
-        final Session session = this.getPlugin().getSession( player );
+        this.getPlugin();
+        final Session session = WorldEditPlugin.getSession( player );
         final MBSchematic clipboard = session.getClipboard();
         if ( clipboard != null ) {
             final Location pLoc = player.getLocation();

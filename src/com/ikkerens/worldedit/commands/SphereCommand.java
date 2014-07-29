@@ -26,7 +26,8 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final Session session = this.getPlugin().getSession( player );
+        this.getPlugin();
+        final Session session = WorldEditPlugin.getSession( player );
 
         SetBlockType type;
         try {

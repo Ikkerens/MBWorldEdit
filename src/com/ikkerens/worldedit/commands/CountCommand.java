@@ -24,7 +24,8 @@ public class CountCommand extends AbstractCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection sel = this.getPlugin().getSession( player ).getSelection();
+        this.getPlugin();
+        final Selection sel = WorldEditPlugin.getSession( player ).getSelection();
         if ( sel.isValid() ) {
             final Location lowest = sel.getMinimumPosition();
             final Location highest = sel.getMaximumPosition();

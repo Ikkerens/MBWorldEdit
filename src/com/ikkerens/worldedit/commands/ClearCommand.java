@@ -18,7 +18,8 @@ public class ClearCommand extends AbstractCommand< WorldEditPlugin > {
         this.getPlugin().getPluginManager().triggerEvent( event );
 
         if ( !event.isCancelled() ) {
-            this.getPlugin().getSession( player ).clearSelection();
+            this.getPlugin();
+            WorldEditPlugin.getSession( player ).clearSelection();
             player.clearLines();
             player.sendMessage( "Cleared your selection." );
         }

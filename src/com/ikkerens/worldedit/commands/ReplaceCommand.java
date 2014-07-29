@@ -33,7 +33,8 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
         if ( args.length == 3 )
             it++;
 
-        final Session session = this.getPlugin().getSession( player );
+        this.getPlugin();
+        final Session session = WorldEditPlugin.getSession( player );
         final Selection sel = session.getSelection();
         if ( sel.isValid() ) {
             final Location lowest = sel.getMinimumPosition();

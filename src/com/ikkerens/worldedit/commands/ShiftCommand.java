@@ -22,7 +22,8 @@ public class ShiftCommand extends AbstractCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection sel = this.getPlugin().getSession( player ).getSelection();
+        this.getPlugin();
+        final Selection sel = WorldEditPlugin.getSession( player ).getSelection();
         if ( sel.isValid() ) {
             int amount;
             try {

@@ -31,13 +31,15 @@ public class UndoCommand extends ActionCommand< WorldEditPlugin > {
         this.getPlugin().getPluginManager().triggerEvent( event );
 
         if ( !event.isCancelled() )
-            for ( int i = 0; i < repeat; i++ )
-                if ( this.getPlugin().getSession( player ).undoLast() )
+            for ( int i = 0; i < repeat; i++ ) {
+                this.getPlugin();
+                if ( WorldEditPlugin.getSession( player ).undoLast() )
                     player.sendMessage( "Undone last action." );
                 else {
                     player.sendMessage( "Action history is empty." );
                     break;
                 }
+            }
     }
 
     public static class UndoActionEvent extends WorldEditEvent {

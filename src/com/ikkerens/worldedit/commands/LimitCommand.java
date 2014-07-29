@@ -26,7 +26,8 @@ public class LimitCommand extends AbstractCommand< WorldEditPlugin > {
             final SetEditLimitEvent event = new SetEditLimitEvent( player, limit );
             this.getPlugin().getPluginManager().triggerEvent( event );
             if ( !event.isCancelled() ) {
-                this.getPlugin().getSession( player ).setLimit( limit );
+                this.getPlugin();
+                WorldEditPlugin.getSession( player ).setLimit( limit );
                 player.sendMessage( String.format( "Limit set to %s", limit ) );
 
                 final Config config = this.getPlugin().getConfig();

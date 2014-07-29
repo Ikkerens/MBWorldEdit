@@ -23,7 +23,8 @@ public class SaveCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        final MBSchematic clb = this.getPlugin().getSession( player ).getClipboard();
+        this.getPlugin();
+        final MBSchematic clb = WorldEditPlugin.getSession( player ).getClipboard();
         if ( clb == null ) {
             player.sendMessage( "Your clipboard is empty!" );
             return;

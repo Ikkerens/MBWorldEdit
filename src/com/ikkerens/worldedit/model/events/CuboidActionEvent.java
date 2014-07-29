@@ -13,7 +13,7 @@ public abstract class CuboidActionEvent extends WorldEditActionEvent {
     }
 
     public Selection getSelection() {
-        return WorldEditPlugin.getInstance().getSession( this.getPlayer() ).getSelection();
+        return WorldEditPlugin.getSession( this.getPlayer() ).getSelection();
     }
 
 }

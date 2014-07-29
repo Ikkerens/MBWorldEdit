@@ -20,7 +20,8 @@ public class BreakCommand extends ActionCommand< WorldEditPlugin > {
 
     @Override
     protected void execute( final String label, final Player player, final String[] args ) {
-        final Session session = this.getPlugin().getSession( player );
+        this.getPlugin();
+        final Session session = WorldEditPlugin.getSession( player );
         final Selection sel = session.getSelection();
         if ( sel.isValid() ) {
             final Location lowest = sel.getMinimumPosition();

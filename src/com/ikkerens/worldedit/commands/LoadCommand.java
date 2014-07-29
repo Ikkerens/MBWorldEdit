@@ -27,7 +27,8 @@ public class LoadCommand extends ActionCommand< WorldEditPlugin > {
         if ( !event.isCancelled() )
             try {
                 final MBSchematic clb = MBSchematic.loadFromFile( String.format( "plugins/MBWorldEdit/%s.mbschem", args[ 0 ] ) );
-                this.getPlugin().getSession( player ).setClipboard( clb );
+                this.getPlugin();
+                WorldEditPlugin.getSession( player ).setClipboard( clb );
                 player.sendMessage( "Clipboard loaded." );
             } catch ( final IOException e ) {
                 player.sendMessage( "Loading clipboard failed!" );

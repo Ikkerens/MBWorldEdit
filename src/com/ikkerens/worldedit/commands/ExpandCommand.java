@@ -23,7 +23,8 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
             return;
         }
 
-        final Selection sel = this.getPlugin().getSession( player ).getSelection();
+        this.getPlugin();
+        final Selection sel = WorldEditPlugin.getSession( player ).getSelection();
         if ( sel.isValid() ) {
             Location lowest, highest;
             if ( args[ 0 ].equalsIgnoreCase( "vert" ) ) {
