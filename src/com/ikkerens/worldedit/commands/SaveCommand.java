@@ -35,8 +35,8 @@ public class SaveCommand extends ActionCommand< WorldEditPlugin > {
 
         if ( !event.isCancelled() )
             try {
-                clb.saveTo( String.format( "plugins/MBWorldEdit/%s.mbschem", args[ 0 ] ) );
-                player.sendMessage( String.format( "Clipboard saved to \"plugins/MBWorldEdit/%s.mbschem\".", args[ 0 ] ) );
+                clb.saveTo( String.format( "plugins/MBWorldEdit/schematics/%s.mbschem", args[ 0 ] ) );
+                player.sendMessage( String.format( "Clipboard saved to \"plugins/MBWorldEdit/schematics/%s.mbschem\".", args[ 0 ] ) );
             } catch ( final IOException e ) {
                 this.getPlugin().getLogger().log( Level.SEVERE, "Could not save clipboard", e );
                 player.sendMessage( "Saving clipboard failed!" );
