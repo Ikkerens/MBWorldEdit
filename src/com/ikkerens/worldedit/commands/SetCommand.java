@@ -27,7 +27,6 @@ public class SetCommand extends ActionCommand< WorldEditPlugin > {
             return;
         }
 
-        this.getPlugin();
         final Session session = WorldEditPlugin.getSession( player );
         final Selection sel = session.getSelection();
         if ( sel.isValid() ) {

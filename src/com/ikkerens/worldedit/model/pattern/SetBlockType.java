@@ -21,7 +21,7 @@ public abstract class SetBlockType extends Parser {
 
     /**
      * Warning: Clipboard setter will return null because it is simply too heavy for lookups.
-     * 
+     *
      * @return Array of block IDs used
      * @see MBSchematic#getBlock
      */
