@@ -65,7 +65,7 @@ public class ReplaceCommand extends ActionCommand< WorldEditPlugin > {
                             for ( int y = lowest.getBlockY(); y <= highest.getBlockY(); y++ ) {
                                 final short matchBlock = world.getFlaggedBlockID( x, y, z );
 
-                                if ( !matcher.matches( (short) ( matchBlock & 0x00FF ) ) )
+                                if ( !matcher.matches( matchBlock ) )
                                     continue;
 
                                 short nextBlock = type.getNextBlock( x, y, z );

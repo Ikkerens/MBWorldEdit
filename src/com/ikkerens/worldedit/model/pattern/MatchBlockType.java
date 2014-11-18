@@ -18,7 +18,7 @@ public class MatchBlockType extends Parser {
     }
 
     public boolean matches( final short id ) {
-        return this.ids.contains( id );
+        return this.ids.contains( (short) ( id & 0x00FF ) );
     }
 
     public short[] getBlockIDs() {
