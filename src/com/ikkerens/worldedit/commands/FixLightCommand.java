@@ -1,6 +1,6 @@
 package com.ikkerens.worldedit.commands;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
@@ -35,11 +35,14 @@ public class FixLightCommand extends AbstractCommand< WorldEditPlugin > {
             if ( !event.isCancelled() ) {
                 final long start = System.currentTimeMillis();
 
-                final HashSet< Chunk > chunks = new HashSet< Chunk >();
-                for ( int x = lowest.getBlockX(); x < highest.getBlockX(); x += 16 )
-                    for ( int y = lowest.getBlockY(); y < highest.getBlockY(); y += 16 )
-                        for ( int z = lowest.getBlockZ(); z < highest.getBlockZ(); z += 16 )
-                            chunks.add( Constructors.newLocation( world, x, y, z ).getChunk() );
+                final ArrayList< Chunk > chunks = new ArrayList< Chunk >();
+                for ( int y = highest.getBlockY(); y >= lowest.getBlockY(); y += 16 )
+                    for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x += 16 )
+                        for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z += 16 ) {
+                            final Chunk chunk = Constructors.newLocation( world, x, y, z ).getChunk();
+                            if ( !chunks.contains( chunk ) )
+                                chunks.add( chunk );
+                        }
 
                 for ( final Chunk chunk : chunks )
                     chunk.recalculateLight();
