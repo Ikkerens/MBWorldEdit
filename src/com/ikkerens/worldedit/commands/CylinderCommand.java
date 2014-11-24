@@ -1,5 +1,6 @@
 package com.ikkerens.worldedit.commands;
 
+import com.ikkerens.worldedit.Util;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.exceptions.BlockLimitException;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
@@ -117,7 +118,7 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
                 final double zn = nextZn;
                 nextZn = ( z + 1 ) * invRadiusZ;
 
-                final double distance = this.distanceCalc( xn, zn );
+                final double distance = Util.distanceCalc( xn, zn );
                 if ( distance > 1 ) {
                     if ( z == 0 )
                         break forX;
@@ -125,7 +126,7 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
                 }
 
                 if ( !filled )
-                    if ( ( this.distanceCalc( nextXn, zn ) <= 1 ) && ( this.distanceCalc( xn, nextZn ) <= 1 ) )
+                    if ( ( Util.distanceCalc( nextXn, zn ) <= 1 ) && ( Util.distanceCalc( xn, nextZn ) <= 1 ) )
                         continue;
 
                 for ( int y = 0; y < height; y++ ) {
@@ -136,10 +137,6 @@ public class CylinderCommand extends ActionCommand< WorldEditPlugin > {
                 }
             }
         }
-    }
-
-    private double distanceCalc( final double x, final double z ) {
-        return ( x * x ) + ( z * z );
     }
 
     public static class CylinderActionEvent extends SinglePointActionEvent {

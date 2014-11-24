@@ -1,6 +1,7 @@
 package com.ikkerens.worldedit.model;
 
-import com.mbserver.api.Constructors;
+import com.ikkerens.worldedit.Util;
+
 import com.mbserver.api.dynamic.UILine;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
@@ -73,11 +74,11 @@ public class Selection {
     }
 
     public Location getMinimumPosition() {
-        return Constructors.newLocation( this.pos1.getWorld(), Math.min( this.pos1.getX(), this.pos2.getX() ), Math.min( this.pos1.getY(), this.pos2.getY() ), Math.min( this.pos1.getZ(), this.pos2.getZ() ) );
+        return Util.newLocation( this.pos1.getWorld(), Math.min( this.pos1.getX(), this.pos2.getX() ), Math.min( this.pos1.getY(), this.pos2.getY() ), Math.min( this.pos1.getZ(), this.pos2.getZ() ) );
     }
 
     public Location getMaximumPosition() {
-        return Constructors.newLocation( this.pos1.getWorld(), Math.max( this.pos1.getX(), this.pos2.getX() ), Math.max( this.pos1.getY(), this.pos2.getY() ), Math.max( this.pos1.getZ(), this.pos2.getZ() ) );
+        return Util.newLocation( this.pos1.getWorld(), Math.max( this.pos1.getX(), this.pos2.getX() ), Math.max( this.pos1.getY(), this.pos2.getY() ), Math.max( this.pos1.getZ(), this.pos2.getZ() ) );
     }
 
     public void inform() {
@@ -96,14 +97,14 @@ public class Selection {
 
             final Location pos3, pos4, pos5, pos6, pos7, pos8;
             // Bottom positions
-            pos3 = Constructors.newLocation( world, pos2.getBlockX(), pos1.getBlockY(), pos1.getBlockZ() );
-            pos4 = Constructors.newLocation( world, pos1.getBlockX(), pos1.getBlockY(), pos2.getBlockZ() );
-            pos5 = Constructors.newLocation( world, pos2.getBlockX(), pos1.getBlockY(), pos2.getBlockZ() );
+            pos3 = Util.newLocation( world, pos2.getBlockX(), pos1.getBlockY(), pos1.getBlockZ() );
+            pos4 = Util.newLocation( world, pos1.getBlockX(), pos1.getBlockY(), pos2.getBlockZ() );
+            pos5 = Util.newLocation( world, pos2.getBlockX(), pos1.getBlockY(), pos2.getBlockZ() );
 
             // Upper positions
-            pos6 = Constructors.newLocation( world, pos1.getBlockX(), pos2.getBlockY(), pos2.getBlockZ() );
-            pos7 = Constructors.newLocation( world, pos2.getBlockX(), pos2.getBlockY(), pos1.getBlockZ() );
-            pos8 = Constructors.newLocation( world, pos1.getBlockX(), pos2.getBlockY(), pos1.getBlockZ() );
+            pos6 = Util.newLocation( world, pos1.getBlockX(), pos2.getBlockY(), pos2.getBlockZ() );
+            pos7 = Util.newLocation( world, pos2.getBlockX(), pos2.getBlockY(), pos1.getBlockZ() );
+            pos8 = Util.newLocation( world, pos1.getBlockX(), pos2.getBlockY(), pos1.getBlockZ() );
 
             // Bottom lines
             player.drawLine( new UILine( pos1, pos3 ), false );

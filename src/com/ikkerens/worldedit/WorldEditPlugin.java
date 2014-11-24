@@ -68,7 +68,7 @@ public class WorldEditPlugin extends MBServerPlugin {
         // Selection
         pm.registerCommand( "/pos1", new String[] { "/pos2" }, new PositionCommand( this ) );
         pm.registerCommand( "/shift", new ShiftCommand( this ) );
-        pm.registerCommand( "/expand", new ExpandCommand( this ) );
+        pm.registerCommand( "/expand", new String[] { "/shrink" }, new ExpandCommand( this ) );
         pm.registerCommand( "/inset", new String[] { "/outset" }, new InOutSetCommand( this ) );
         pm.registerCommand( "/clear", new ClearCommand( this ) );
 

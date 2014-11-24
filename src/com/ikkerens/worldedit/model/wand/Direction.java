@@ -19,6 +19,14 @@ public enum Direction {
     }
 
     public Location addToLocation( final Location location, final int amount ) {
-        return location.add( this.x * amount, this.y * amount, this.z * amount );
+        final int newY = location.getBlockY() + ( this.y * amount );
+        int modY;
+        if ( newY > 127 )
+            modY = -( newY - 127 );
+        else if ( newY < 0 )
+            modY = -newY;
+        else
+            modY = 0;
+        return location.add( this.x * amount, ( this.y * amount ) + modY, this.z * amount );
     }
 }

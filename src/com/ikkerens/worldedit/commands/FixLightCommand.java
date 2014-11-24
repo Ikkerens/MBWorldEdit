@@ -2,13 +2,13 @@ package com.ikkerens.worldedit.commands;
 
 import java.util.ArrayList;
 
+import com.ikkerens.worldedit.Util;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.Session;
 import com.ikkerens.worldedit.model.events.WorldEditActionEvent;
 
-import com.mbserver.api.Constructors;
 import com.mbserver.api.game.Chunk;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
@@ -37,12 +37,12 @@ public class FixLightCommand extends AbstractCommand< WorldEditPlugin > {
 
                 final ArrayList< Chunk > chunks = new ArrayList< Chunk >();
                 for ( int y = highest.getBlockY(); y >= lowest.getBlockY(); y += 16 ) {
-                    if ( y < 0 || y > 127 )
+                    if ( ( y < 0 ) || ( y > 127 ) )
                         continue;
 
                     for ( int x = lowest.getBlockX(); x <= highest.getBlockX(); x += 16 )
                         for ( int z = lowest.getBlockZ(); z <= highest.getBlockZ(); z += 16 ) {
-                            final Chunk chunk = Constructors.newLocation( world, x, y, z ).getChunk();
+                            final Chunk chunk = Util.newLocation( world, x, y, z ).getChunk();
                             if ( !chunks.contains( chunk ) )
                                 chunks.add( chunk );
                         }

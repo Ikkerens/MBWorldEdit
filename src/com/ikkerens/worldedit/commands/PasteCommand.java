@@ -1,5 +1,6 @@
 package com.ikkerens.worldedit.commands;
 
+import com.ikkerens.worldedit.Util;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.exceptions.BlockLimitException;
 import com.ikkerens.worldedit.handlers.ActionCommand;
@@ -31,7 +32,7 @@ public class PasteCommand extends ActionCommand< WorldEditPlugin > {
             final int oZ = pLoc.getBlockZ() + clipboard.getRelativeZ();
             final int[] sizes = clipboard.getSizes();
 
-            final boolean skipAir = ( args.length == 1 ) && args[ 0 ].equalsIgnoreCase( "-a" );
+            final boolean skipAir = ( args.length == 1 ) && args[ 0 ].startsWith( "-" ) && args[ 0 ].contains( "a" );
             final PasteCommandEvent event = new PasteCommandEvent( player, oX, oY, oZ, skipAir );
             this.getPlugin().getPluginManager().triggerEvent( event );
 
@@ -53,6 +54,11 @@ public class PasteCommand extends ActionCommand< WorldEditPlugin > {
                     player.sendMessage( String.format( FINISHED_LIMIT, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
                     return;
                 }
+
+                // -s flag, sets the selection to the pasted content
+                if ( ( args.length == 1 ) && args[ 0 ].startsWith( "-" ) && args[ 0 ].contains( "s" ) )
+                    session.getSelection().setPositions( Util.newLocation( world, oX, oY, oZ ),
+                        Util.newLocation( world, oX + sizes[ 0 ], oY + sizes[ 1 ], oZ + sizes[ 2 ] ) );
 
                 player.sendMessage( String.format( FINISHED_DONE, wea.getAffected(), ( System.currentTimeMillis() - start ) / 1000f ) );
             }

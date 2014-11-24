@@ -1,5 +1,6 @@
 package com.ikkerens.worldedit.commands;
 
+import com.ikkerens.worldedit.Util;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.exceptions.BlockLimitException;
 import com.ikkerens.worldedit.exceptions.BlockNotFoundException;
@@ -115,7 +116,7 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
                     final double az = nextZ;
                     nextZ = ( iz + 1 ) * invertedRZ;
 
-                    final double distance = this.distanceCalc( ax, ay, az );
+                    final double distance = Util.distanceCalc( ax, ay, az );
 
                     if ( distance > 1 ) {
                         if ( iz == 0 ) {
@@ -126,7 +127,7 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
                         break forZ;
                     }
 
-                    if ( !filled && ( this.distanceCalc( nextX, ay, az ) <= 1 ) && ( this.distanceCalc( ax, nextY, az ) <= 1 ) && ( this.distanceCalc( ax, ay, nextZ ) <= 1 ) )
+                    if ( !filled && ( Util.distanceCalc( nextX, ay, az ) <= 1 ) && ( Util.distanceCalc( ax, nextY, az ) <= 1 ) && ( Util.distanceCalc( ax, ay, nextZ ) <= 1 ) )
                         continue;
 
                     wea.setBlock( cX + ix, cY + iy, cZ + iz, type );
@@ -142,10 +143,6 @@ public class SphereCommand extends ActionCommand< WorldEditPlugin > {
                 }
             }
         }
-    }
-
-    private double distanceCalc( final double x, final double y, final double z ) {
-        return ( x * x ) + ( y * y ) + ( z * z );
     }
 
     public static class SphereActionEvent extends SinglePointActionEvent {

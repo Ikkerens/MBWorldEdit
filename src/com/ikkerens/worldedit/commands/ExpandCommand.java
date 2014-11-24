@@ -1,12 +1,12 @@
 package com.ikkerens.worldedit.commands;
 
+import com.ikkerens.worldedit.Util;
 import com.ikkerens.worldedit.WorldEditPlugin;
 import com.ikkerens.worldedit.handlers.AbstractCommand;
 import com.ikkerens.worldedit.model.Selection;
 import com.ikkerens.worldedit.model.events.SelectionCommandEvent;
 import com.ikkerens.worldedit.model.wand.Direction;
 
-import com.mbserver.api.Constructors;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 
@@ -35,7 +35,7 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     lowest = sel.getMinimumPosition();
                     highest = sel.getMaximumPosition();
 
-                    sel.setPositions( Constructors.newLocation( sel.getWorld(), lowest.getX(), 0, highest.getZ() ), Constructors.newLocation( sel.getWorld(), highest.getX(), 127, highest.getZ() ) );
+                    sel.setPositions( Util.newLocation( sel.getWorld(), lowest.getX(), 0, highest.getZ() ), Util.newLocation( sel.getWorld(), highest.getX(), 127, highest.getZ() ) );
                     sel.inform();
                 } else
                     return;
@@ -47,6 +47,9 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     player.sendMessage( "That amount is invalid." );
                     return;
                 }
+
+                if ( label.equalsIgnoreCase( "shrink" ) )
+                    amount *= -1;
 
                 Direction dir;
                 try {
@@ -64,14 +67,14 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     highest = sel.getMaximumPosition();
 
                     switch ( dir ) {
+                        case SOUTH:
                         case UP:
-                        case NORTH:
                         case EAST:
                             highest = dir.addToLocation( highest, amount );
                             break;
 
+                        case NORTH:
                         case DOWN:
-                        case SOUTH:
                         case WEST:
                             lowest = dir.addToLocation( lowest, amount );
                             break;
