@@ -35,7 +35,7 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     lowest = sel.getMinimumPosition();
                     highest = sel.getMaximumPosition();
 
-                    sel.setPositions( Util.newLocation( sel.getWorld(), lowest.getX(), 0, highest.getZ() ), Util.newLocation( sel.getWorld(), highest.getX(), 127, highest.getZ() ) );
+                    sel.setPositions( Util.newLocation( sel.getWorld(), lowest.getX(), 0, lowest.getZ() ), Util.newLocation( sel.getWorld(), highest.getX(), 127, highest.getZ() ) );
                     sel.inform();
                 } else
                     return;
