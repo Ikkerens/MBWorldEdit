@@ -27,7 +27,7 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
         final Selection sel = WorldEditPlugin.getSession( player ).getSelection();
         if ( sel.isValid() ) {
             Location lowest, highest;
-            if ( args[ 0 ].equalsIgnoreCase( "vert" ) ) {
+            if ( args[ 0 ].equalsIgnoreCase( "/vert" ) ) {
                 final VerticalExpansionSelectionEvent event = new VerticalExpansionSelectionEvent( player );
                 this.getPlugin().getPluginManager().triggerEvent( event );
 
@@ -48,7 +48,7 @@ public class ExpandCommand extends AbstractCommand< WorldEditPlugin > {
                     return;
                 }
 
-                if ( label.equalsIgnoreCase( "shrink" ) )
+                if ( label.equalsIgnoreCase( "/shrink" ) )
                     amount *= -1;
 
                 Direction dir;
