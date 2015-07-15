@@ -32,7 +32,6 @@ public class UndoCommand extends ActionCommand< WorldEditPlugin > {
 
         if ( !event.isCancelled() )
             for ( int i = 0; i < repeat; i++ ) {
-                this.getPlugin();
                 if ( WorldEditPlugin.getSession( player ).undoLast() )
                     player.sendMessage( "Undone last action." );
                 else {
